@@ -1,0 +1,17 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "hilys-site",
+      "runtimeExecutable": "python",
+      "runtimeArgs": ["-m", "http.server", "5500", "--directory", "C:/Users/tshid/HILYS/public"],
+      "port": 5500
+    },
+    {
+      "name": "hilys-materials",
+      "runtimeExecutable": "python",
+      "runtimeArgs": ["-m", "http.server", "5501", "--directory", "C:/Users/tshid/HILYS/materials"],
+      "port": 5501
+    }
+  ]
+}

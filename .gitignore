@@ -1,0 +1,15 @@
+# Python
+__pycache__/
+*.pyc
+
+# Office lock / temp files
+~$*
+
+# Firebase
+.firebase/
+firebase-debug.log
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
