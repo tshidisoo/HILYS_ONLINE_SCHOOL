@@ -26,6 +26,7 @@
     </a>
     <nav class="nav" aria-label="Main">
       <a class="hide-sm" href="#levels">Levels</a>
+      <a class="hide-sm" href="courses.html">Courses</a>
       <a class="hide-sm" href="#how">How it works</a>
       <a class="hide-sm" href="#prices">Prices</a>
       <a class="btn btn-primary btn-sm" href="#trial">Free trial</a>
@@ -266,46 +267,12 @@
 <footer>
   <div class="wrap">
     <span class="motto">Diversity is power</span>
+    <a href="courses.html">Courses</a>
     <a href="policies.html">Parent policies</a>
     <span>&copy; <span id="year">2026</span> HILYS Languages &amp; Culture Centre</span>
   </div>
 </footer>
 
-<script>
-  // Fill these in when ready. Leave empty to show the "opens soon" state.
-  var CONFIG = {
-    whatsappNumber: "", // international format, digits only, e.g. "263771234567"
-    bookingUrl: ""      // e.g. your Cal.com or Calendly free-trial link
-  };
-
-  var whatsappText = "Hello HILYS, I'd like to book a free trial isiNdebele lesson for my child.";
-  var missing = false;
-
-  document.querySelectorAll("[data-whatsapp]").forEach(function (a) {
-    if (CONFIG.whatsappNumber) {
-      a.href = "https://wa.me/" + CONFIG.whatsappNumber + "?text=" + encodeURIComponent(whatsappText);
-      a.target = "_blank"; a.rel = "noopener";
-    } else if (a.closest(".trial")) {
-      a.setAttribute("aria-disabled", "true"); missing = true;
-    }
-  });
-
-  document.querySelectorAll("[data-booking]").forEach(function (a) {
-    if (CONFIG.bookingUrl) {
-      a.href = CONFIG.bookingUrl; a.target = "_blank"; a.rel = "noopener";
-    } else {
-      a.setAttribute("aria-disabled", "true"); missing = true;
-    }
-  });
-
-  document.querySelectorAll("[aria-disabled='true']").forEach(function (a) {
-    a.addEventListener("click", function (e) { e.preventDefault(); });
-  });
-
-  var note = document.querySelector("[data-contact-note]");
-  if (missing && note) note.hidden = false;
-
-  document.getElementById("year").textContent = new Date().getFullYear();
-</script>
+<script src="assets/site.js"></script>
 </body>
 </html>
