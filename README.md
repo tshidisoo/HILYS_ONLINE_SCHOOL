@@ -10,6 +10,9 @@ A plain HTML site for HILYS Languages & Culture Centre: online isiNdebele lesson
 | `public/courses.html` | Course list and the three ways to learn (Self-paced, HILYS Plus, Live) with prices |
 | `public/book-1.html` | Book 1 video course page: what's taught, lesson shape, the 35 lessons |
 | `public/lesson.html` | One lesson page (`lesson.html?n=5`): video, culture piece, "Mark as done" |
+| `public/certificate.html` | Printable Book 1 certificate: type the child's name, then print or save as PDF |
+| `public/assets/book1-content.js` | Flashcards, culture piece and home task for each lesson. Made by a script, don't edit by hand |
+| `scripts/make_book1_content.py` | Rebuilds `book1-content.js` from `materials/book1/lessons.py` |
 | `public/assets/book1.js` | The Book 1 lesson list. Add video links and choose free lessons here |
 | `public/assets/site.js` | WhatsApp and booking settings, shared by every page |
 | `public/policies.html` | Parent policies: safety, missed lessons, power cuts, payments, stopping |
@@ -47,6 +50,8 @@ While these are empty, the buttons are greyed out and the page says "Online book
 
 - **Add a video:** in `public/assets/book1.js`, paste the video's embed address into that lesson's `video: ""`. Until then the lesson page says the video is being recorded.
 - **Free lessons:** lessons with `free: true` can be watched by anyone (lessons 1 and 2 to start). The others show a "join the waiting list" message.
+- **Flashcards, culture piece and home task:** free lessons show these under the video. They come from `materials/book1/lessons.py`. Only checked words are shown: anything still marked with a `*` (waiting for Sija's check) or missing an English meaning is left out, so some lessons have few or no flashcards yet. After Sija checks a word, remove its `*` in `lessons.py` and run `python scripts/make_book1_content.py`.
+- **Certificate:** when all 35 lessons are ticked as done, the course page links to `certificate.html`. Until sign-in exists anyone can open and print it.
 - **Prices:** the Self-paced and HILYS Plus prices are in `public/courses.html`. They are proposals; change the text there.
 - **Not built yet:** sign-in and online payment. The site only hides the player on paid lessons, so don't paste a paid lesson's video link until sign-in exists. "Mark as done" is remembered in the visitor's own browser only.
 

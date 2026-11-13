@@ -50,6 +50,37 @@
       <div><dt>Length</dt><dd data-length></dd></div>
     </dl>
 
+    <section class="lesson-block" data-tip-block hidden>
+      <span class="eyebrow">How to make the sound</span>
+      <p data-tip></p>
+    </section>
+
+    <section class="lesson-block" data-cards-block hidden>
+      <span class="eyebrow">Words in this lesson</span>
+      <div class="flash" data-flash role="button" tabindex="0" aria-label="Flashcard. Tap to show the English.">
+        <span class="pic" data-flash-pic aria-hidden="true"></span>
+        <span class="word" data-flash-word></span>
+        <span class="english" data-flash-en></span>
+      </div>
+      <div class="flash-controls">
+        <button class="btn btn-ghost btn-sm" type="button" data-flash-prev>Back</button>
+        <span data-flash-count></span>
+        <button class="btn btn-ghost btn-sm" type="button" data-flash-next>Next</button>
+      </div>
+      <p class="hint">Tap the card to see the English.</p>
+    </section>
+
+    <section class="lesson-block culture-note" data-culture-block hidden>
+      <span class="eyebrow">Did you know?</span>
+      <h2><span data-culture-nd></span> <small data-culture-en></small></h2>
+      <p data-culture-text></p>
+    </section>
+
+    <section class="lesson-block home-task" data-home-block hidden>
+      <span class="eyebrow">Home task</span>
+      <p data-home></p>
+    </section>
+
     <div class="lesson-actions">
       <button class="btn btn-ghost" type="button" data-done>Mark as done</button>
       <div class="pager">
@@ -71,6 +102,7 @@
 </footer>
 <script src="assets/site.js"></script>
 <script src="assets/book1.js"></script>
+<script src="assets/book1-content.js"></script>
 <script>
   var $ = function (s) { return document.querySelector(s); };
   var n = parseInt(new URLSearchParams(location.search).get("n"), 10);
@@ -109,6 +141,39 @@
       '<a class="btn btn-primary" href="index.html#trial">Book a free trial</a></div>';
   }
 
+  // Flashcards, culture piece and home task (free lessons only), from assets/book1-content.js.
+  var extra = (lesson.free && BOOK1_CONTENT[n]) || {};
+  function show(block, fill) { $(block).hidden = false; fill(); }
+  if (extra.tip) show("[data-tip-block]", function () { $("[data-tip]").textContent = extra.tip; });
+  if (extra.culture) show("[data-culture-block]", function () {
+    $("[data-culture-nd]").textContent = extra.culture.nd;
+    $("[data-culture-en]").textContent = extra.culture.en;
+    $("[data-culture-text]").textContent = extra.culture.text;
+  });
+  if (extra.home) show("[data-home-block]", function () { $("[data-home]").textContent = extra.home; });
+  if (extra.cards) show("[data-cards-block]", function () {
+    var i = 0, flash = $("[data-flash]");
+    function card() {
+      var c = extra.cards[i];
+      $("[data-flash-pic]").textContent = c[0];
+      $("[data-flash-word]").textContent = c[1];
+      $("[data-flash-en]").textContent = c[2];
+      flash.classList.remove("shown");
+      $("[data-flash-count]").textContent = (i + 1) + " / " + extra.cards.length;
+    }
+    function step(d) { i = (i + d + extra.cards.length) % extra.cards.length; card(); }
+    function flip() { flash.classList.toggle("shown"); }
+    flash.addEventListener("click", flip);
+    flash.addEventListener("keydown", function (e) {
+      if (e.key === "Enter" || e.key === " ") { e.preventDefault(); flip(); }
+      else if (e.key === "ArrowRight") step(1);
+      else if (e.key === "ArrowLeft") step(-1);
+    });
+    $("[data-flash-next]").addEventListener("click", function () { step(1); });
+    $("[data-flash-prev]").addEventListener("click", function () { step(-1); });
+    card();
+  });
+
   var prev = $("[data-prev]"), next = $("[data-next]");
   if (n > 1) prev.href = "lesson.html?n=" + (n - 1); else prev.hidden = true;
   if (n < BOOK1.lessons.length) next.href = "lesson.html?n=" + (n + 1);
@@ -128,6 +193,7 @@
     if (i > -1) done.splice(i, 1); else done.push(n);
     try { localStorage.setItem(KEY, JSON.stringify(done)); } catch (e) {}
     paint();
+    if (done.length === BOOK1.lessons.length) location.href = "certificate.html";
   });
   paint();
 </script>

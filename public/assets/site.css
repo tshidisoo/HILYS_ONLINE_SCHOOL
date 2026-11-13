@@ -324,3 +324,92 @@ footer .motto { font: 800 1rem/1 var(--font-display); letter-spacing: 0.14em; te
 .lesson-actions { display: flex; flex-wrap: wrap; gap: 0.75rem; justify-content: space-between; align-items: center; }
 .lesson-actions .pager { display: flex; gap: 0.75rem; flex-wrap: wrap; }
 button.btn { font-family: var(--font-body); }
+.band.alt .course-card { background: var(--bg); }
+
+/* Home page: featured course beside the ways to learn */
+.course-feature { display: grid; grid-template-columns: 1.2fr 1fr; gap: clamp(1.5rem, 4vw, 3rem); align-items: start; }
+@media (max-width: 760px) { .course-feature { grid-template-columns: 1fr; } }
+.ways { display: grid; gap: 1rem; margin: 0; }
+.ways dt { font: 600 1.1rem/1.3 var(--font-display); color: var(--navy); }
+.ways dd { margin: 0.15rem 0 0; color: var(--muted); }
+.ways .btn { justify-self: start; margin-top: 0.25rem; }
+
+/* Lesson page: tip, flashcards, culture piece, home task */
+.lesson-block {
+  background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius);
+  padding: 1.25rem 1.4rem; display: grid; gap: 0.6rem;
+}
+.lesson-block[hidden] { display: none; }
+.lesson-block h2 { font-size: 1.5rem; color: var(--navy); }
+.lesson-block h2 small { font: 400 1rem var(--font-body); color: var(--muted); margin-left: 0.3rem; }
+.culture-note { border-left: 4px solid var(--teal); }
+.home-task { border-left: 4px solid var(--orange); }
+.flash {
+  background: var(--bg); border: 1px solid var(--line); border-radius: var(--radius);
+  min-height: 230px; padding: 1.5rem; cursor: pointer; user-select: none;
+  display: grid; justify-items: center; align-content: center; gap: 0.5rem; text-align: center;
+}
+.flash .pic { font-size: 4rem; line-height: 1; }
+.flash .word { font: 800 clamp(1.8rem, 6vw, 2.6rem)/1.1 var(--font-display); color: var(--navy); overflow-wrap: anywhere; }
+.flash .english { font-weight: 600; font-size: 1.2rem; color: var(--orange); visibility: hidden; }
+.flash.shown .english { visibility: visible; }
+.flash-controls { display: flex; align-items: center; justify-content: center; gap: 1rem; color: var(--muted); font-variant-numeric: tabular-nums; }
+.lesson-block .hint { color: var(--muted); font-size: 0.9rem; text-align: center; max-width: none; }
+
+/* Certificate */
+.cert-ready { display: flex; flex-wrap: wrap; align-items: center; gap: 0.75rem; margin-bottom: 1.5rem; max-width: none; }
+.cert-teaser { display: grid; grid-template-columns: 1.3fr 1fr; gap: clamp(1.5rem, 4vw, 3rem); align-items: center; }
+.cert-teaser .section-head { margin-bottom: 0; }
+@media (max-width: 760px) { .cert-teaser { grid-template-columns: 1fr; } }
+.cert-mini {
+  background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden;
+  display: grid; justify-items: center; gap: 0.5rem; text-align: center; text-decoration: none; color: var(--muted);
+  transform: rotate(-2deg); box-shadow: 0 10px 30px color-mix(in srgb, var(--navy) 12%, transparent);
+}
+.cert-mini .beads { width: 100%; }
+.cert-mini .eyebrow { margin-top: 1rem; }
+.cert-mini strong { font: 800 1.8rem/1.1 var(--font-display); color: var(--navy); }
+.cert-mini span:nth-last-child(2) { margin-bottom: 1rem; }
+
+.cert-page { padding-block: clamp(1.5rem, 4vw, 3rem); }
+.cert-page .wrap { max-width: 900px; display: grid; gap: 1.5rem; }
+.cert-tools { display: flex; flex-wrap: wrap; gap: 0.75rem; align-items: end; }
+.cert-tools label { display: grid; gap: 0.3rem; font-weight: 600; font-size: 0.95rem; flex: 1 1 240px; }
+.cert-tools input {
+  font: 400 1.05rem var(--font-body); padding: 0.7rem 0.9rem; border-radius: 10px;
+  border: 1px solid var(--line); background: var(--surface); color: var(--ink); width: 100%;
+}
+.cert-tools input:focus-visible { outline: 3px solid var(--orange); outline-offset: 2px; }
+.cert-note { color: var(--muted); font-size: 0.95rem; }
+/* The certificate keeps its light, printed look in dark mode too. */
+.cert {
+  --ink: #141a3a; --muted: #4a5170; --line: #dde0ec; --navy: #1f2f86; --orange: #e8642c; --teal: #138a8a;
+  background: #fff; color: var(--ink); border: 3px solid var(--navy); border-radius: 6px;
+  aspect-ratio: 297 / 210; display: grid; grid-template-rows: auto 1fr auto; overflow: hidden;
+  container-type: inline-size; text-align: center;
+}
+.cert .beads { height: 2.2cqw; background-size: 4.4cqw 2.2cqw, 4.4cqw 2.2cqw, auto; background-position: 0 0, 2.2cqw 0, 0 0; }
+.cert-body { display: grid; justify-items: center; align-content: center; gap: 1.6cqw; padding: 2cqw 6cqw; }
+.cert-body img { width: 11cqw; height: 11cqw; border-radius: 50%; }
+.cert-body .kicker { font: 600 1.5cqw/1 var(--font-body); letter-spacing: 0.3em; text-transform: uppercase; color: var(--orange); }
+.cert-body .cheer { font: 800 6cqw/1 var(--font-display); color: var(--navy); letter-spacing: -0.01em; }
+.cert-body .line { font-size: 2cqw; color: var(--muted); max-width: none; }
+.cert-body .name {
+  font: 800 4.6cqw/1.15 var(--font-display); color: var(--ink); min-width: 50cqw; max-width: 84cqw;
+  border-bottom: 2px solid var(--line); padding-bottom: 0.8cqw; overflow-wrap: anywhere;
+}
+.cert-body .name.empty { color: var(--line); }
+.cert-body .what { font-size: 2.1cqw; max-width: 70cqw; }
+.cert-body .what strong { color: var(--navy); }
+.cert-sign { display: flex; justify-content: space-between; gap: 4cqw; width: 100%; margin-top: 1.5cqw; font-size: 1.6cqw; color: var(--muted); }
+.cert-sign div { flex: 1; border-top: 1px solid var(--muted); padding-top: 0.6cqw; }
+.cert-sign strong { display: block; color: var(--ink); font-size: 1.8cqw; }
+@media print {
+  @page { size: A4 landscape; margin: 10mm; }
+  body { background: #fff; }
+  body::before, .top, footer, .cert-tools, .cert-note, .cert-page header, body > .beads { display: none !important; }
+  .cert-page { padding: 0; }
+  .cert-page .wrap { max-width: none; padding: 0; display: block; }
+  .cert { width: auto; height: 186mm; aspect-ratio: 297 / 210; margin: 0 auto; break-inside: avoid; }
+  * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+}
