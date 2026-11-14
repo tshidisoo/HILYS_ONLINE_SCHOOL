@@ -405,9 +405,10 @@ button.btn { font-family: var(--font-body); }
 .cert-sign div { flex: 1; border-top: 1px solid var(--muted); padding-top: 0.6cqw; }
 .cert-sign strong { display: block; color: var(--ink); font-size: 1.8cqw; }
 @media print {
-  @page { size: A4 landscape; margin: 10mm; }
+  @page cert { size: A4 landscape; margin: 10mm; }
+  .cert-page { page: cert; }
   body { background: #fff; }
-  body::before, .top, footer, .cert-tools, .cert-note, .cert-page header, body > .beads { display: none !important; }
+  body::before, .top, body > footer, .cert-tools, .cert-note, .cert-page header, body > .beads { display: none !important; }
   .cert-page { padding: 0; }
   .cert-page .wrap { max-width: none; padding: 0; display: block; }
   .cert { width: auto; height: 186mm; aspect-ratio: 297 / 210; margin: 0 auto; break-inside: avoid; }
@@ -457,3 +458,100 @@ button.btn { font-family: var(--font-body); }
 .refer > div { display: grid; gap: 0.4rem; }
 .refer p { font: 600 1.2rem/1.3 var(--font-display); }
 .reviews[hidden] + .refer { margin-top: 0; }
+
+/* Worksheet: one A4 page. It keeps its light, printed look in dark mode too. */
+.sheet-link { grid-template-columns: minmax(0, 1fr) auto; align-items: center; }
+@media (max-width: 640px) { .sheet-link { grid-template-columns: 1fr; } }
+.sheet-page { padding-block: clamp(1.5rem, 4vw, 3rem); }
+.sheet-page .wrap { max-width: 860px; display: grid; gap: 1.25rem; }
+.sheet-page .cert-tools { justify-content: space-between; align-items: center; }
+.sheet-page .video[hidden], .sheet[hidden], .sheet [hidden], .cert-tools[hidden] { display: none; }
+.sheet {
+  --ink: #141a3a; --muted: #4a5170; --line: #c9cee3; --navy: #1f2f86; --orange: #e8642c; --teal: #138a8a;
+  --letters: "Andika", "Comic Sans MS", var(--font-body);
+  background: #fff; color: var(--ink); border: 1px solid var(--line); border-radius: 6px;
+  padding: clamp(1rem, 4vw, 2.2rem); display: grid; gap: 1.1rem; container-type: inline-size;
+}
+.sheet-head { display: grid; grid-template-columns: auto minmax(0, 1fr) minmax(0, 14rem); gap: 0.9rem; align-items: center; border-bottom: 3px solid var(--navy); padding-bottom: 0.9rem; }
+.sheet-head img { width: 56px; height: 56px; border-radius: 50%; }
+.sheet-head .kicker { font: 600 0.75rem/1 var(--font-body); letter-spacing: 0.12em; text-transform: uppercase; color: var(--orange); }
+.sheet-head h1 { font-size: 1.5rem; color: var(--navy); margin-top: 0.3rem; letter-spacing: 0; }
+.sheet-head dl { margin: 0; display: grid; gap: 0.7rem; }
+.sheet-head dl div { display: flex; gap: 0.5rem; align-items: flex-end; }
+.sheet-head dt { font-size: 0.85rem; color: var(--muted); }
+.sheet-head dd { margin: 0; flex: 1; border-bottom: 1px solid var(--muted); height: 1.2rem; }
+@container (max-width: 560px) { .sheet-head { grid-template-columns: auto minmax(0, 1fr); } .sheet-head dl { grid-column: 1 / -1; } }
+.sheet section { display: grid; gap: 0.6rem; break-inside: avoid; }
+.sheet h2 { font-size: 1.1rem; display: flex; flex-wrap: wrap; align-items: center; gap: 0.3rem 0.6rem; color: var(--ink); letter-spacing: 0; }
+.sheet h2 .n {
+  width: 1.6rem; height: 1.6rem; border-radius: 50%; background: var(--navy); color: #fff;
+  display: inline-grid; place-items: center; font-size: 0.9rem;
+}
+.sheet h2 small { font: 400 0.9rem var(--font-body); color: var(--muted); }
+.sheet h2 .stars { margin-left: auto; font-size: 1.4rem; color: var(--orange); letter-spacing: 0.2em; }
+.sheet .how { color: var(--muted); font-size: 0.95rem; max-width: none; }
+/* Handwriting lines: top, dashed middle, base. Andika's small letters are half its font size tall,
+   so a font size equal to the line height puts them exactly between the middle and base lines. */
+.lines {
+  --h: 3.4rem; height: var(--h); position: relative; margin-bottom: 1.05rem;
+  border-top: 1px solid var(--line); border-bottom: 1.5px solid var(--muted);
+  background: linear-gradient(90deg, var(--orange) 50%, transparent 0) 0 50% / 10px 1px repeat-x;
+}
+.ghost {
+  position: absolute; left: 0.4rem; bottom: -0.085em; white-space: pre;
+  font: 400 var(--h)/1 var(--letters); letter-spacing: 0.25em; color: #c3c8dd;
+}
+.sheet .read { display: grid; gap: 0.2rem; }
+.sheet .read p { font: 400 clamp(1.2rem, 4.4cqw, 1.9rem)/1.35 var(--letters); max-width: none; white-space: pre-wrap; }
+.sheet .finish { margin: 0; padding-left: 1.6rem; display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 0.5rem 2.5rem; }
+.sheet .finish li { font: 400 clamp(1.2rem, 4.2cqw, 1.7rem)/1.4 var(--letters); letter-spacing: 0.04em; padding-left: 0.3rem; }
+.sheet .finish li::marker { font: 600 1rem var(--font-body); color: var(--muted); }
+.draw-box { border: 2px dashed var(--line); border-radius: 12px; height: 11rem; }
+.sheet-foot { border-top: 1px solid var(--line); padding-top: 0.7rem; display: grid; gap: 0.4rem; font-size: 0.9rem; color: var(--muted); }
+.sheet-foot p { max-width: none; color: var(--ink); }
+.sheet-foot .answers { transform: rotate(180deg); color: var(--muted); font-size: 0.8rem; text-align: right; }
+@media print {
+  @page sheet { size: A4 portrait; margin: 10mm; }
+  .sheet-page { page: sheet; }
+  .sheet-page { padding: 0; }
+  .sheet-page .wrap { max-width: none; padding: 0; display: block; }
+  .sheet-page header:not(.sheet-head), .sheet-page .cert-tools { display: none !important; }
+  /* Exactly one page tall: the drawing box takes whatever room is left, and the footer sits at the bottom. */
+  .sheet { border: 0; padding: 0; gap: 0.8rem; height: 275mm; display: flex; flex-direction: column; overflow: hidden; }
+  .sheet section[data-draw-block] { flex: 1 1 0; min-height: 4.5rem; grid-template-rows: auto 1fr; }
+  .sheet .draw-box { height: auto; min-height: 0; }
+  .sheet-foot { margin-top: auto; }
+}
+
+/* Level check */
+.quiz { display: grid; gap: 1.25rem; }
+.quiz[hidden], .result[hidden], .result ul[hidden] { display: none; }
+.quiz fieldset {
+  margin: 0; border: 1px solid var(--line); border-radius: var(--radius); background: var(--surface);
+  padding: 1.1rem 1.25rem 1.25rem; display: grid; gap: 0.5rem; min-width: 0;
+}
+/* Floated so the question sits inside the box instead of on its border. */
+.quiz legend { float: left; width: 100%; padding: 0; margin-bottom: 0.35rem; font: 600 1.15rem/1.3 var(--font-display); display: flex; gap: 0.6rem; align-items: baseline; }
+.quiz legend + * { clear: both; }
+.quiz .q {
+  flex: none; width: 1.7rem; height: 1.7rem; border-radius: 50%; background: var(--navy); color: var(--on-accent);
+  display: inline-grid; place-items: center; font-size: 0.95rem;
+}
+.quiz label {
+  display: flex; gap: 0.7rem; align-items: flex-start; padding: 0.65rem 0.8rem; border-radius: 10px;
+  border: 1px solid var(--line); cursor: pointer;
+}
+.quiz label:hover { border-color: var(--orange); }
+.quiz label:has(input:checked) { border-color: var(--navy); background: color-mix(in srgb, var(--navy) 9%, transparent); font-weight: 600; }
+.quiz input { accent-color: var(--orange); width: 1.15rem; height: 1.15rem; margin: 0.2rem 0 0; flex: none; }
+.quiz input:focus-visible { outline: 3px solid var(--orange); outline-offset: 2px; }
+.quiz-actions { display: flex; flex-wrap: wrap; gap: 0.75rem 1rem; align-items: center; }
+.quiz-actions .note { color: var(--red); font-weight: 600; }
+.result {
+  background: var(--surface); border: 1px solid var(--line); border-top: 6px solid var(--orange); border-radius: var(--radius);
+  padding: clamp(1.25rem, 4vw, 2rem); display: grid; gap: 0.9rem;
+}
+.result:focus { outline: none; }
+.result h2 { color: var(--navy); font-size: clamp(2rem, 6vw, 3rem); }
+.result ul { margin: 0; padding-left: 1.2rem; display: grid; gap: 0.5rem; color: var(--muted); max-width: 65ch; }
+.result-actions { display: flex; flex-wrap: wrap; gap: 0.75rem; margin-top: 0.25rem; }
