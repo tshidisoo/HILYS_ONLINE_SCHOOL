@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>HILYS Book 1 Certificate</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="description" content="The HILYS Book 1 certificate: type your child's name and print it when they finish all 35 isiNdebele lessons.">
+<meta property="og:title" content="HILYS Book 1 Certificate">
+<meta property="og:description" content="The HILYS Book 1 certificate: type your child's name and print it when they finish all 35 isiNdebele lessons.">
+<meta property="og:type" content="website">
+<meta property="og:image" content="assets/logo.jpg">
+<link rel="icon" href="assets/logo.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Source+Sans+3:wght@400;600&display=swap">
+<link rel="stylesheet" href="assets/site.css">
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="index.html" aria-label="HILYS Languages home">
+      <img src="assets/logo.jpg" alt="" width="40" height="40">
+      <span>HILYS</span>
+    </a>
+    <nav class="nav" aria-label="Main">
+      <a class="hide-sm" href="courses.html">Courses</a>
+      <a class="hide-sm" href="courses.html#plans">Ways to learn</a>
+      <a class="hide-sm" href="index.html#prices">Live lessons</a>
+      <a class="btn btn-primary btn-sm" href="index.html#trial">Free trial</a>
+    </nav>
+  </div>
+</header>
+
+<main class="cert-page">
+  <div class="wrap">
+    <header>
+      <p class="crumb"><a href="courses.html">Courses</a> / <a href="book-1.html">Book 1</a> / Certificate</p>
+      <h1>Book 1 certificate</h1>
+    </header>
+
+    <div class="cert-tools">
+      <label>Child's name
+        <input type="text" data-name-input maxlength="40" autocomplete="off" placeholder="Type the name to show on the certificate">
+      </label>
+      <button class="btn btn-primary" type="button" data-print>Print or save as PDF</button>
+    </div>
+    <p class="cert-note" data-cert-note></p>
+
+    <article class="cert" aria-label="Certificate">
+      <div class="beads" aria-hidden="true"></div>
+      <div class="cert-body">
+        <img src="assets/logo.jpg" alt="HILYS Languages &amp; Culture Centre" width="120" height="120">
+        <span class="kicker">Certificate</span>
+        <span class="cheer">Sizwe kakhulu!</span>
+        <p class="line">Very well done! This certificate is given to</p>
+        <span class="name empty" data-name>Your child's name</span>
+        <p class="what">for finishing <strong>Book 1</strong> of isiNdebele: the 5 vowels, 20 sounds and 3 clicks, in 35 lessons.</p>
+        <div class="cert-sign">
+          <div><strong>Sija</strong>Teacher, HILYS Languages &amp; Culture Centre</div>
+          <div><strong data-date></strong>Date</div>
+        </div>
+      </div>
+      <div class="beads" aria-hidden="true"></div>
+    </article>
+  </div>
+</main>
+
+<div class="beads" aria-hidden="true"></div>
+<footer>
+  <div class="wrap">
+    <span class="motto">Diversity is power</span>
+    <a href="courses.html">Courses</a>
+    <a href="policies.html">Parent policies</a>
+    <span>&copy; <span id="year">2026</span> HILYS Languages &amp; Culture Centre</span>
+  </div>
+</footer>
+<script src="assets/site.js"></script>
+<script src="assets/book1.js"></script>
+<script>
+  var input = document.querySelector("[data-name-input]"), nameEl = document.querySelector("[data-name]");
+  input.addEventListener("input", function () {
+    var v = input.value.trim();
+    nameEl.textContent = v || "Your child's name";
+    nameEl.classList.toggle("empty", !v);
+  });
+  document.querySelector("[data-print]").addEventListener("click", function () { window.print(); });
+  document.querySelector("[data-date]").textContent =
+    new Date().toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" });
+
+  // Until sign-in exists, lessons ticked as done are counted in this browser only.
+  var done = [];
+  try { done = JSON.parse(localStorage.getItem("hilys-book1-done")) || []; } catch (e) {}
+  var total = BOOK1.lessons.length;
+  document.querySelector("[data-cert-note]").textContent = done.length >= total
+    ? "All " + total + " lessons are ticked off. Type the name, then print."
+    : "This is a preview. " + done.length + " of " + total + " lessons are ticked off on this device so far.";
+</script>
+</body>
+</html>

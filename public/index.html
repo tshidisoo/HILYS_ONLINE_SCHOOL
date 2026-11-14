@@ -26,6 +26,7 @@
     </a>
     <nav class="nav" aria-label="Main">
       <a class="hide-sm" href="#levels">Levels</a>
+      <a class="hide-sm" href="courses.html">Courses</a>
       <a class="hide-sm" href="#how">How it works</a>
       <a class="hide-sm" href="#prices">Prices</a>
       <a class="btn btn-primary btn-sm" href="#trial">Free trial</a>
@@ -116,6 +117,37 @@
           <h3>Recipes at home</h3>
           <p>Simple Ndebele dishes for your child to try in your kitchen with you, learning the words as they cook.</p>
         </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="beads" aria-hidden="true"></div>
+
+  <section class="band alt" id="courses">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="eyebrow">New: video courses</span>
+        <h2>Learn between lessons, or at your own pace</h2>
+        <p>Recorded lessons your child can watch any time. Use them alone, or alongside live lessons with Sija.</p>
+      </div>
+      <div class="course-feature">
+        <article class="course-card" style="--c: var(--orange)">
+          <span class="status">Videos being recorded</span>
+          <h3>Book 1: sounds and first reading</h3>
+          <p>35 video lessons on the vowels, 20 consonant sounds and the three clicks, with flashcards, a culture piece and a home task in every lesson.</p>
+          <ul class="facts">
+            <li>Beginner</li>
+            <li>40 minutes each</li>
+            <li>First 2 lessons free</li>
+          </ul>
+          <a class="btn btn-primary" href="book-1.html">View the course</a>
+        </article>
+        <dl class="ways">
+          <div><dt>Self-paced</dt><dd>The Book 1 videos, to watch in your own time.</dd></div>
+          <div><dt>HILYS Plus</dt><dd>Every video course, plus a live group class each month.</dd></div>
+          <div><dt>Live lessons</dt><dd>One-to-one or small groups on Zoom, with the videos included.</dd></div>
+          <a class="btn btn-ghost" href="courses.html#plans">Compare ways to learn</a>
+        </dl>
       </div>
     </div>
   </section>
@@ -240,6 +272,23 @@
     </div>
   </section>
 
+  <section class="band" id="reviews" data-reviews-band hidden>
+    <div class="wrap">
+      <div class="section-head" data-reviews-head>
+        <span class="eyebrow">From our families</span>
+        <h2>What parents say</h2>
+      </div>
+      <div class="reviews" data-reviews></div>
+      <div class="refer" data-refer hidden>
+        <div>
+          <span class="eyebrow">Bring a friend</span>
+          <p data-refer-text></p>
+        </div>
+        <a class="btn btn-ghost" data-whatsapp="Hello HILYS, I'd like to refer a family." href="#trial">Tell us about a family</a>
+      </div>
+    </div>
+  </section>
+
   <section class="band" id="trial">
     <div class="wrap">
       <div class="trial">
@@ -266,46 +315,12 @@
 <footer>
   <div class="wrap">
     <span class="motto">Diversity is power</span>
+    <a href="courses.html">Courses</a>
     <a href="policies.html">Parent policies</a>
     <span>&copy; <span id="year">2026</span> HILYS Languages &amp; Culture Centre</span>
   </div>
 </footer>
 
-<script>
-  // Fill these in when ready. Leave empty to show the "opens soon" state.
-  var CONFIG = {
-    whatsappNumber: "", // international format, digits only, e.g. "263771234567"
-    bookingUrl: ""      // e.g. your Cal.com or Calendly free-trial link
-  };
-
-  var whatsappText = "Hello HILYS, I'd like to book a free trial isiNdebele lesson for my child.";
-  var missing = false;
-
-  document.querySelectorAll("[data-whatsapp]").forEach(function (a) {
-    if (CONFIG.whatsappNumber) {
-      a.href = "https://wa.me/" + CONFIG.whatsappNumber + "?text=" + encodeURIComponent(whatsappText);
-      a.target = "_blank"; a.rel = "noopener";
-    } else if (a.closest(".trial")) {
-      a.setAttribute("aria-disabled", "true"); missing = true;
-    }
-  });
-
-  document.querySelectorAll("[data-booking]").forEach(function (a) {
-    if (CONFIG.bookingUrl) {
-      a.href = CONFIG.bookingUrl; a.target = "_blank"; a.rel = "noopener";
-    } else {
-      a.setAttribute("aria-disabled", "true"); missing = true;
-    }
-  });
-
-  document.querySelectorAll("[aria-disabled='true']").forEach(function (a) {
-    a.addEventListener("click", function (e) { e.preventDefault(); });
-  });
-
-  var note = document.querySelector("[data-contact-note]");
-  if (missing && note) note.hidden = false;
-
-  document.getElementById("year").textContent = new Date().getFullYear();
-</script>
+<script src="assets/site.js"></script>
 </body>
 </html>
