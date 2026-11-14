@@ -1,6 +1,7 @@
 """Builds public/assets/book1-content.js from materials/book1/lessons.py.
 
-The website's lesson pages use it for flashcards, the culture piece and the home task.
+The website's lesson pages use it for flashcards, the culture piece, the home task and
+the printable worksheet (worksheet.html).
 Run it again after changing lessons.py:
 
     python scripts/make_book1_content.py
@@ -24,6 +25,32 @@ def checked(text):
     return bool(text) and "*" not in text
 
 
+def worksheet(lesson):
+    """What the printable worksheet shows: letters to trace, lines to read, words to finish, a word to draw."""
+    sheet = {}
+    letters = [x for x in (lesson.get("letter"), lesson.get("letter2")) if x]
+    writing = lesson.get("writing")
+    if letters:  # a new sound: small and capital, e.g. m M
+        sheet["trace"] = [form for x in letters for form in (x, x.upper())]
+        sheet["repeat"] = True
+    elif isinstance(writing, dict) and writing["kind"] == "letters":
+        sheet["trace"] = writing["text"].split()
+    elif isinstance(writing, dict) and checked(writing["text"]):
+        sheet["pattern"] = writing["text"]
+    elif lesson.get("letters"):  # review and reading lessons
+        sheet["trace"] = lesson["letters"][:8]
+    read = [row for row in lesson.get("read", []) if checked(row)][:3]
+    if read:
+        sheet["read"] = read
+    finish = [[q, a] for q, a in lesson.get("qedisa", []) if checked(q) and checked(a)][:5]
+    if finish:
+        sheet["finish"] = finish
+    for key in (lesson.get("key"), lesson.get("key2")):
+        if key and checked(key[0]) and checked(key[2]) and "draw" not in sheet:
+            sheet["draw"] = [key[0], key[2]]
+    return sheet
+
+
 content = {}
 for lesson in LESSONS:
     cards, seen = [], set()
@@ -44,6 +71,9 @@ for lesson in LESSONS:
         entry["home"] = lesson["home"]
     if checked(lesson.get("tip")):
         entry["tip"] = lesson["tip"]
+    sheet = worksheet(lesson)
+    if sheet:
+        entry["sheet"] = sheet
     content[lesson["n"]] = entry
 
 out = ROOT / "public" / "assets" / "book1-content.js"
@@ -55,4 +85,6 @@ out.write_text(
     encoding="utf-8",
 )
 with_cards = sum(1 for e in content.values() if "cards" in e)
-print("Wrote %s: %d lessons, %d with flashcards" % (out.relative_to(ROOT), len(content), with_cards))
+with_sheet = sum(1 for e in content.values() if "sheet" in e)
+print("Wrote %s: %d lessons, %d with flashcards, %d with a worksheet"
+      % (out.relative_to(ROOT), len(content), with_cards, with_sheet))

@@ -1,0 +1,178 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>HILYS Book 1 Worksheet</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="description" content="A printable worksheet for a HILYS Book 1 isiNdebele lesson: letters to trace, lines to read and words to finish.">
+<meta property="og:title" content="HILYS Book 1 Worksheet">
+<meta property="og:description" content="A printable worksheet for a HILYS Book 1 isiNdebele lesson: letters to trace, lines to read and words to finish.">
+<meta property="og:type" content="website">
+<meta property="og:image" content="assets/logo.jpg">
+<link rel="icon" href="assets/logo.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Andika:wght@400;700&family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Source+Sans+3:wght@400;600&display=swap">
+<link rel="stylesheet" href="assets/site.css">
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="index.html" aria-label="HILYS Languages home">
+      <img src="assets/logo.jpg" alt="" width="40" height="40">
+      <span>HILYS</span>
+    </a>
+    <nav class="nav" aria-label="Main">
+      <a class="hide-sm" href="courses.html">Courses</a>
+      <a class="hide-sm" href="courses.html#plans">Ways to learn</a>
+      <a class="hide-sm" href="index.html#prices">Live lessons</a>
+      <a class="btn btn-primary btn-sm" href="index.html#trial">Free trial</a>
+    </nav>
+  </div>
+</header>
+
+<main class="sheet-page">
+  <div class="wrap">
+    <header>
+      <p class="crumb"><a href="courses.html">Courses</a> / <a href="book-1.html#lessons">Book 1</a> / <a data-back href="book-1.html">Lesson</a> / Worksheet</p>
+    </header>
+
+    <div class="cert-tools" data-tools>
+      <p class="cert-note">Print one for each child. It fits on one A4 page.</p>
+      <button class="btn btn-primary" type="button" data-print>Print or save as PDF</button>
+    </div>
+
+    <div class="video" data-locked hidden>
+      <div class="msg"><strong>This worksheet is part of the full course</strong>
+        <span>The first 2 lessons are free. Join the waiting list and we'll tell you when Book 1 opens.</span>
+        <a class="btn btn-primary" href="book-1.html#join">Join the waiting list</a></div>
+    </div>
+
+    <article class="sheet" data-sheet hidden>
+      <header class="sheet-head">
+        <img src="assets/logo.jpg" alt="" width="56" height="56">
+        <div>
+          <span class="kicker" data-kicker></span>
+          <h1 data-title></h1>
+        </div>
+        <dl>
+          <div><dt>Name</dt><dd></dd></div>
+          <div><dt>Date</dt><dd></dd></div>
+        </dl>
+      </header>
+
+      <section data-trace-block hidden>
+        <h2><span class="n"></span>Trace, then write</h2>
+        <p class="how" data-pattern-text hidden></p>
+        <div data-trace></div>
+      </section>
+
+      <section data-read-block hidden>
+        <h2><span class="n"></span>Read aloud <small>Tick a star each time you read it all.</small> <span class="stars" aria-hidden="true">☆ ☆ ☆</span></h2>
+        <div class="read" data-read></div>
+      </section>
+
+      <section data-finish-block hidden>
+        <h2><span class="n"></span>Finish it <small>Write the missing letters or word.</small></h2>
+        <ol class="finish" data-finish></ol>
+      </section>
+
+      <section data-draw-block hidden>
+        <h2><span class="n"></span>Draw <small data-draw></small></h2>
+        <div class="draw-box"></div>
+      </section>
+
+      <footer class="sheet-foot">
+        <p data-home hidden></p>
+        <p class="answers" data-answers hidden></p>
+        <span>HILYS Languages &amp; Culture Centre · Book 1</span>
+      </footer>
+    </article>
+  </div>
+</main>
+
+<div class="beads" aria-hidden="true"></div>
+<footer>
+  <div class="wrap">
+    <span class="motto">Diversity is power</span>
+    <a href="courses.html">Courses</a>
+    <a href="policies.html">Parent policies</a>
+    <span>&copy; <span id="year">2026</span> HILYS Languages &amp; Culture Centre</span>
+  </div>
+</footer>
+<script src="assets/site.js"></script>
+<script src="assets/book1.js"></script>
+<script src="assets/book1-content.js"></script>
+<script>
+  var $ = function (s) { return document.querySelector(s); };
+  var n = parseInt(new URLSearchParams(location.search).get("n"), 10);
+  var lesson = BOOK1.lessons.filter(function (l) { return l.n === n; })[0];
+  var sheet = lesson && (BOOK1_CONTENT[n] || {}).sheet;
+  if (!lesson || !sheet) location.replace("book-1.html#lessons");
+
+  document.title = "HILYS Book 1 Worksheet " + n;
+  $("[data-back]").textContent = "Lesson " + n;
+  $("[data-back]").href = "lesson.html?n=" + n;
+  $("[data-print]").addEventListener("click", function () { window.print(); });
+
+  function el(tag, cls, text) {
+    var e = document.createElement(tag);
+    if (cls) e.className = cls;
+    if (text) e.textContent = text;
+    return e;
+  }
+
+  if (!lesson.free) {
+    // Like the videos: this only hides the worksheet. Real protection needs sign-in.
+    $("[data-locked]").hidden = false; $("[data-tools]").hidden = true;
+  } else {
+    $("[data-sheet]").hidden = false;
+    $("[data-kicker]").textContent = "Book 1 · Lesson " + n;
+    $("[data-title]").textContent = lesson.nd + " · " + lesson.en;
+
+    // 1. Trace: grey letters to write over, then empty lines to write alone.
+    if (sheet.trace || sheet.pattern) {
+      $("[data-trace-block]").hidden = false;
+      var trace = $("[data-trace]");
+      var rows = sheet.pattern ? ["– – – –", "∩ ∩ ∩ ∩", "/\\/\\/\\/\\", "o o o o"]
+        : sheet.repeat ? sheet.trace.map(function (x) { return [x, x, x, x].join(" "); })
+        : [sheet.trace.join("  ")];
+      if (sheet.pattern) { $("[data-pattern-text]").hidden = false; $("[data-pattern-text]").textContent = sheet.pattern; }
+      rows.forEach(function (r) { trace.appendChild(el("div", "lines", "")).appendChild(el("span", "ghost", r)); });
+      // Room to write alone: one empty line, or two when the page has space for them.
+      var empty = sheet.pattern ? 0 : sheet.repeat && sheet.trace.length > 2 ? 1 : 2;
+      for (var k = 0; k < empty; k++) trace.appendChild(el("div", "lines"));
+    }
+
+    // 2. Read aloud
+    if (sheet.read) {
+      $("[data-read-block]").hidden = false;
+      sheet.read.forEach(function (r) { $("[data-read]").appendChild(el("p", "", r)); });
+    }
+
+    // 3. Finish it: the blanks from the lesson, with the answers upside down at the bottom
+    if (sheet.finish) {
+      $("[data-finish-block]").hidden = false;
+      sheet.finish.forEach(function (f) { $("[data-finish]").appendChild(el("li", "", f[0])); });
+      $("[data-answers]").hidden = false;
+      $("[data-answers]").textContent = "Answers: " + sheet.finish.map(function (f, i) { return (i + 1) + ". " + f[1]; }).join("   ");
+    }
+
+    // 4. Draw
+    if (sheet.draw) {
+      $("[data-draw-block]").hidden = false;
+      $("[data-draw]").textContent = sheet.draw[0] + " (" + sheet.draw[1] + ")";
+    }
+
+    var home = (BOOK1_CONTENT[n] || {}).home;
+    if (home) { $("[data-home]").hidden = false; $("[data-home]").textContent = "Home task: " + home; }
+
+    // Number only the sections that are shown.
+    [].filter.call(document.querySelectorAll(".sheet section"), function (s) { return !s.hidden; })
+      .forEach(function (s, i) { s.querySelector(".n").textContent = i + 1; });
+  }
+</script>
+</body>
+</html>

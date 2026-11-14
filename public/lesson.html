@@ -81,6 +81,14 @@
       <p data-home></p>
     </section>
 
+    <section class="lesson-block sheet-link" data-sheet-block hidden>
+      <div>
+        <span class="eyebrow">Worksheet</span>
+        <p>Letters to trace, lines to read and words to finish, on one page.</p>
+      </div>
+      <a class="btn btn-ghost" data-sheet-link href="worksheet.html">Print the worksheet</a>
+    </section>
+
     <div class="lesson-actions">
       <button class="btn btn-ghost" type="button" data-done>Mark as done</button>
       <div class="pager">
@@ -150,6 +158,7 @@
     $("[data-culture-en]").textContent = extra.culture.en;
     $("[data-culture-text]").textContent = extra.culture.text;
   });
+  if (extra.sheet) show("[data-sheet-block]", function () { $("[data-sheet-link]").href = "worksheet.html?n=" + n; });
   if (extra.home) show("[data-home-block]", function () { $("[data-home]").textContent = extra.home; });
   if (extra.cards) show("[data-cards-block]", function () {
     var i = 0, flash = $("[data-flash]");
