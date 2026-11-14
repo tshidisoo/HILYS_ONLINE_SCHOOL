@@ -10,7 +10,7 @@ A plain HTML site for HILYS Languages & Culture Centre: online isiNdebele lesson
 | `public/courses.html` | Course list and the three ways to learn (Self-paced, HILYS Plus, Live) with prices |
 | `public/book-1.html` | Book 1 video course page: what's taught, lesson shape, the 35 lessons |
 | `public/lesson.html` | One lesson page (`lesson.html?n=5`): video, culture piece, "Mark as done" |
-| `public/teach.html` | "Teach with HILYS" page for new teachers: who we want, what we give, how to join |
+| `public/teach.html` | "Teach with HILYS" page for new teachers. Unlisted for now: no page links to it and search engines are told to skip it. Share the address directly |
 | `public/certificate.html` | Printable Book 1 certificate: type the child's name, then print or save as PDF |
 | `public/assets/book1-content.js` | Flashcards, culture piece and home task for each lesson. Made by a script, don't edit by hand |
 | `scripts/make_book1_content.py` | Rebuilds `book1-content.js` from `materials/book1/lessons.py` |
