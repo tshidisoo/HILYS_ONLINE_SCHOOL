@@ -1,0 +1,158 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>HILYS Level Check</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="description" content="Four quick questions to find where your child should start with isiNdebele: Beginner, Intermediate or Conversation.">
+<meta property="og:title" content="HILYS Level Check">
+<meta property="og:description" content="Four quick questions to find where your child should start with isiNdebele: Beginner, Intermediate or Conversation.">
+<meta property="og:type" content="website">
+<meta property="og:image" content="assets/logo.jpg">
+<link rel="icon" href="assets/logo.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Source+Sans+3:wght@400;600&display=swap">
+<link rel="stylesheet" href="assets/site.css">
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="index.html" aria-label="HILYS Languages home">
+      <img src="assets/logo.jpg" alt="" width="40" height="40">
+      <span>HILYS</span>
+    </a>
+    <nav class="nav" aria-label="Main">
+      <a class="hide-sm" href="courses.html">Courses</a>
+      <a class="hide-sm" href="courses.html#plans">Ways to learn</a>
+      <a class="hide-sm" href="index.html#prices">Live lessons</a>
+      <a class="btn btn-primary btn-sm" href="index.html#trial">Free trial</a>
+    </nav>
+  </div>
+</header>
+
+<main class="doc">
+  <div class="wrap">
+    <header>
+      <span class="eyebrow">Level check</span>
+      <h1>Where should your child start?</h1>
+      <p>Four questions, about a minute. Nothing you answer is saved or sent anywhere.</p>
+    </header>
+
+    <form class="quiz" data-quiz>
+      <fieldset>
+        <legend><span class="q">1</span>How old is your child?</legend>
+        <label><input type="radio" name="age" value="under 6"> Under 6</label>
+        <label><input type="radio" name="age" value="6 to 8"> 6 to 8</label>
+        <label><input type="radio" name="age" value="9 to 12"> 9 to 12</label>
+        <label><input type="radio" name="age" value="13 or older"> 13 or older</label>
+      </fieldset>
+      <fieldset>
+        <legend><span class="q">2</span>When someone speaks isiNdebele to your child, how much do they understand?</legend>
+        <label><input type="radio" name="understand" value="0"> Little or nothing</label>
+        <label><input type="radio" name="understand" value="1"> Simple things, like "How are you?" and "What is your name?"</label>
+        <label><input type="radio" name="understand" value="2"> Almost everything</label>
+      </fieldset>
+      <fieldset>
+        <legend><span class="q">3</span>How does your child usually answer?</legend>
+        <label><input type="radio" name="answer" value="0"> In English</label>
+        <label><input type="radio" name="answer" value="1"> With single isiNdebele words, or a mix of both</label>
+        <label><input type="radio" name="answer" value="2"> In isiNdebele sentences</label>
+      </fieldset>
+      <fieldset>
+        <legend><span class="q">4</span>Can your child read isiNdebele?</legend>
+        <label><input type="radio" name="read" value="0"> Not yet</label>
+        <label><input type="radio" name="read" value="1"> A few words</label>
+        <label><input type="radio" name="read" value="2"> Yes, sentences</label>
+      </fieldset>
+      <div class="quiz-actions">
+        <button class="btn btn-primary" type="submit">Show the level</button>
+        <p class="note" data-missing hidden role="alert">Please answer every question.</p>
+      </div>
+    </form>
+    <noscript><p>The level check needs JavaScript. You can also <a href="index.html#trial">book a free trial lesson</a>, where we find your child's level together.</p></noscript>
+
+    <section class="result" data-result hidden tabindex="-1" aria-live="polite">
+      <span class="eyebrow">A good place to start</span>
+      <h2 data-level></h2>
+      <p data-why></p>
+      <ul data-tips></ul>
+      <div class="result-actions">
+        <a class="btn btn-primary" data-trial href="index.html#trial">Book a free trial lesson</a>
+        <a class="btn btn-ghost" data-course href="book-1.html" hidden>See the Book 1 course</a>
+        <button class="btn btn-ghost" type="button" data-again>Start again</button>
+      </div>
+      <p class="updated">This is a guide from your answers. The free trial lesson, where the teacher talks with your child, gives the real answer.</p>
+    </section>
+  </div>
+</main>
+
+<div class="beads" aria-hidden="true"></div>
+<footer>
+  <div class="wrap">
+    <span class="motto">Diversity is power</span>
+    <a href="courses.html">Courses</a>
+    <a href="policies.html">Parent policies</a>
+    <span>&copy; <span id="year">2026</span> HILYS Languages &amp; Culture Centre</span>
+  </div>
+</footer>
+<script src="assets/site.js"></script>
+<script>
+  // The rules follow the level check in the trial lesson plan (docs/curriculum/trial-lesson.md):
+  // understanding and how the child answers decide the level; age and reading only add advice.
+  var LEVELS = {
+    Beginner: "Your child is starting from the beginning. Beginner lessons start with greetings, family words and the sounds of isiNdebele, through pictures, games and songs.",
+    Intermediate: "Your child understands isiNdebele but mostly answers in English or single words. Intermediate lessons build the confidence to reply in full sentences.",
+    Conversation: "Your child already understands and speaks isiNdebele. Conversation lessons keep it strong through stories, talk and reading."
+  };
+  var form = document.querySelector("[data-quiz]"), result = document.querySelector("[data-result]");
+
+  form.addEventListener("submit", function (e) {
+    e.preventDefault();
+    var a = {};
+    ["age", "understand", "answer", "read"].forEach(function (name) {
+      var picked = form.querySelector('input[name="' + name + '"]:checked');
+      if (picked) a[name] = picked.value;
+    });
+    var complete = Object.keys(a).length === 4;
+    document.querySelector("[data-missing]").hidden = complete;
+    if (!complete) return;
+
+    var understand = +a.understand, answer = +a.answer, read = +a.read;
+    var level = understand === 2 && answer === 2 ? "Conversation" : understand >= 1 ? "Intermediate" : "Beginner";
+
+    var tips = [];
+    if (a.age === "under 6") tips.push("Our lessons are made for children aged 6 and up. Message us and we'll tell you honestly whether to start now or wait a little.");
+    if (a.age === "13 or older") tips.push("Our materials are written for younger children. Tell us your child's age when you book, so the teacher can adapt the lesson.");
+    if (read < 2 && level !== "Beginner") tips.push("Speaking is ahead of reading. The Book 1 course teaches the sounds and first reading, so it can help alongside live lessons.");
+    if (level === "Beginner") tips.push("The Book 1 video course is made for this level: 35 lessons on sounds, clicks and first reading.");
+    if (understand === 0 && answer > 0) tips.push("Your child uses some words but understands little, so we suggest starting at the beginning to build understanding first.");
+
+    document.querySelector("[data-level]").textContent = level;
+    document.querySelector("[data-why]").textContent = LEVELS[level];
+    var list = document.querySelector("[data-tips]"); list.textContent = "";
+    tips.forEach(function (t) { var li = document.createElement("li"); li.textContent = t; list.appendChild(li); });
+    list.hidden = !tips.length;
+    document.querySelector("[data-course]").hidden = !(level === "Beginner" || read < 2);
+
+    // With a WhatsApp number set, the button sends the result so the teacher sees it before the trial.
+    var trial = document.querySelector("[data-trial]");
+    if (CONFIG.whatsappNumber) {
+      var text = "Hello HILYS, the level check suggested " + level + " for my child (age " + a.age + "). I'd like to book a free trial lesson.";
+      trial.href = "https://wa.me/" + CONFIG.whatsappNumber + "?text=" + encodeURIComponent(text);
+      trial.target = "_blank"; trial.rel = "noopener";
+      trial.textContent = "Send this and book a free trial";
+    }
+
+    form.hidden = true; result.hidden = false; result.focus();
+    window.scrollTo(0, 0);
+  });
+
+  document.querySelector("[data-again]").addEventListener("click", function () {
+    form.reset(); result.hidden = true; form.hidden = false; window.scrollTo(0, 0);
+  });
+</script>
+</body>
+</html>
