@@ -10,6 +10,10 @@
   --teal: #138a8a;
   --red: #c8323a;
   --sun: #f2a516;
+  /* Orange and teal are too pale for small text or white text on top (WCAG AA needs 4.5:1).
+     Use the -ink versions for text and filled buttons; keep the plain ones for decoration. */
+  --orange-ink: #b94515;
+  --teal-ink: #0f7a7a;
   --on-accent: #ffffff;
   --font-display: "Bricolage Grotesque", "Trebuchet MS", system-ui, sans-serif;
   --font-body: "Source Sans 3", "Segoe UI", system-ui, sans-serif;
@@ -20,12 +24,14 @@
   :root:not([data-theme="light"]) {
     --bg: #0b0d18; --surface: #151a2e; --ink: #eef0f8; --muted: #a8aecb; --line: #2a3150;
     --navy: #8fa2ff; --orange: #f5824f; --teal: #3cc4c0; --red: #f06a70; --sun: #f7bd45;
+    --orange-ink: #f5824f; --teal-ink: #3cc4c0;
     --on-accent: #0b0d18; color-scheme: dark;
   }
 }
 :root[data-theme="dark"] {
   --bg: #0b0d18; --surface: #151a2e; --ink: #eef0f8; --muted: #a8aecb; --line: #2a3150;
   --navy: #8fa2ff; --orange: #f5824f; --teal: #3cc4c0; --red: #f06a70; --sun: #f7bd45;
+    --orange-ink: #f5824f; --teal-ink: #3cc4c0;
   --on-accent: #0b0d18; color-scheme: dark;
 }
 
@@ -40,7 +46,14 @@ body {
 }
 img { max-width: 100%; display: block; }
 a { color: var(--navy); }
-a:focus-visible, button:focus-visible { outline: 3px solid var(--orange); outline-offset: 3px; border-radius: 6px; }
+a:focus-visible, button:focus-visible, summary:focus-visible, [tabindex]:focus-visible { outline: 3px solid var(--orange); outline-offset: 3px; border-radius: 6px; }
+/* Keyboard users: a link that appears on the first Tab press and jumps past the menu. */
+.skip {
+  position: absolute; left: 12px; top: -4rem; z-index: 30; padding: 0.6rem 1rem; border-radius: 8px;
+  background: var(--surface); color: var(--ink); font-weight: 600; border: 2px solid var(--orange);
+}
+.skip:focus { top: calc(12px + env(safe-area-inset-top, 0px)); }
+main:focus { outline: none; }
 h1, h2, h3 { font-family: var(--font-display); line-height: 1.1; text-wrap: balance; margin: 0; }
 h1 { font-size: clamp(2.2rem, 5.5vw, 3.6rem); font-weight: 800; letter-spacing: -0.02em; }
 h2 { font-size: clamp(1.7rem, 3.6vw, 2.4rem); font-weight: 800; letter-spacing: -0.01em; }
@@ -59,7 +72,7 @@ p { margin: 0; max-width: 65ch; }
   font: 600 0.8rem/1 var(--font-body);
   text-transform: uppercase;
   letter-spacing: 0.12em;
-  color: var(--orange);
+  color: var(--orange-ink);
 }
 .section-head { display: grid; gap: 0.75rem; margin-bottom: 2rem; }
 .section-head p { color: var(--muted); }
@@ -90,7 +103,8 @@ body::before {
 .brand span { font: 800 1.1rem/1 var(--font-display); letter-spacing: 0.02em; }
 .nav { display: flex; gap: 1.25rem; align-items: center; }
 .nav a { color: var(--ink); text-decoration: none; font-weight: 600; font-size: 0.95rem; }
-.nav a:hover { color: var(--orange); }
+.nav a:hover { color: var(--orange-ink); }
+.nav a.btn-primary, .nav a.btn-primary:hover { color: var(--on-accent); }
 @media (max-width: 760px) { .nav .hide-sm { display: none; } }
 
 /* Buttons */
@@ -100,7 +114,7 @@ body::before {
   font: 600 1rem/1 var(--font-body); text-decoration: none; cursor: pointer;
   border: 2px solid transparent;
 }
-.btn-primary { background: var(--orange); color: var(--on-accent); }
+.btn-primary { background: var(--orange-ink); color: var(--on-accent); }
 .btn-primary:hover { filter: brightness(1.06); }
 .btn-ghost { border-color: var(--navy); color: var(--navy); background: transparent; }
 .btn-ghost:hover { background: color-mix(in srgb, var(--navy) 10%, transparent); }
@@ -117,7 +131,7 @@ body::before {
 .hero-copy .lede { font-size: 1.2rem; color: var(--muted); }
 .hero-actions { display: flex; flex-wrap: wrap; gap: 0.75rem; margin-top: 0.5rem; }
 .facts { display: flex; flex-wrap: wrap; gap: 0.5rem 1.25rem; color: var(--muted); font-size: 0.95rem; padding: 0; margin: 0.25rem 0 0; list-style: none; }
-.facts li::before { content: "•"; color: var(--teal); font-weight: 700; margin-right: 0.4rem; }
+.facts li::before { content: "•"; color: var(--teal-ink); font-weight: 700; margin-right: 0.4rem; }
 .hero-art { display: grid; justify-items: center; gap: 1.25rem; min-width: 0; }
 .hero-art img {
   width: min(340px, 100%); aspect-ratio: 1; border-radius: 50%;
@@ -129,7 +143,7 @@ body::before {
 }
 .phrase .nd { font: 800 1.35rem/1.2 var(--font-display); color: var(--navy); }
 .phrase .en { color: var(--muted); font-size: 0.95rem; }
-.phrase .label { font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--teal); font-weight: 600; }
+.phrase .label { font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--teal-ink); font-weight: 600; }
 @media (max-width: 760px) {
   .hero .wrap { grid-template-columns: 1fr; }
   .hero-art img { display: none; }
@@ -171,7 +185,7 @@ body::before {
 .plan.popular { border: 2px solid var(--orange); }
 .plan-head { display: flex; justify-content: space-between; align-items: baseline; gap: 0.5rem; flex-wrap: wrap; }
 .plan-head h3 { font-size: 1.3rem; }
-.badge { font-size: 0.75rem; font-weight: 600; background: var(--orange); color: var(--on-accent); padding: 0.2rem 0.6rem; border-radius: 999px; }
+.badge { font-size: 0.75rem; font-weight: 600; background: var(--orange-ink); color: var(--on-accent); padding: 0.2rem 0.6rem; border-radius: 999px; }
 .plan .sub { color: var(--muted); font-size: 0.95rem; }
 .rows { display: grid; gap: 0.6rem; margin: 0; }
 .row { display: flex; justify-content: space-between; align-items: baseline; gap: 1rem; border-top: 1px dashed var(--line); padding-top: 0.6rem; }
@@ -218,7 +232,7 @@ footer .motto { font: 800 1rem/1 var(--font-display); letter-spacing: 0.14em; te
   list-style: none; display: flex; justify-content: space-between; gap: 1rem;
 }
 .faq summary::-webkit-details-marker { display: none; }
-.faq summary::after { content: "+"; color: var(--orange); font-weight: 800; }
+.faq summary::after { content: "+"; color: var(--orange-ink); font-weight: 800; }
 .faq details[open] summary::after { content: "–"; }
 .faq details p { margin-top: 0.6rem; color: var(--muted); }
 
@@ -292,14 +306,14 @@ footer .motto { font: 800 1rem/1 var(--font-display); letter-spacing: 0.14em; te
   display: grid; grid-template-columns: 2rem minmax(0, 1fr) auto; gap: 0.75rem; align-items: center;
   padding: 0.7rem 0; text-decoration: none; color: var(--ink);
 }
-.syllabus li a:hover .nd { color: var(--orange); }
+.syllabus li a:hover .nd { color: var(--orange-ink); }
 .syllabus .num { font: 800 1rem/1 var(--font-display); color: var(--muted); font-variant-numeric: tabular-nums; }
 .syllabus .nd { font-weight: 600; color: var(--navy); }
 .syllabus .en { color: var(--muted); font-size: 0.95rem; }
 .syllabus .titles { display: grid; min-width: 0; }
 .pill { font-size: 0.75rem; font-weight: 600; padding: 0.2rem 0.6rem; border-radius: 999px; border: 1px solid var(--line); color: var(--muted); white-space: nowrap; }
-.pill.free { border-color: var(--teal); color: var(--teal); }
-.pill.done { background: var(--teal); border-color: var(--teal); color: var(--on-accent); }
+.pill.free { border-color: var(--teal-ink); color: var(--teal-ink); }
+.pill.done { background: var(--teal-ink); border-color: var(--teal-ink); color: var(--on-accent); }
 
 /* Lesson page */
 .lesson { padding-block: clamp(2rem, 5vw, 3.5rem); }
@@ -318,7 +332,7 @@ footer .motto { font: 800 1rem/1 var(--font-display); letter-spacing: 0.14em; te
 .video .btn-primary { margin-top: 0.25rem; }
 .lesson-meta { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1rem; margin: 0; }
 .lesson-meta div { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 0.9rem 1.1rem; }
-.lesson-meta dt { font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--teal); font-weight: 600; }
+.lesson-meta dt { font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--teal-ink); font-weight: 600; }
 .lesson-meta dd { margin: 0.2rem 0 0; font-weight: 600; }
 @media (max-width: 640px) { .lesson-meta { grid-template-columns: 1fr; } }
 .lesson-actions { display: flex; flex-wrap: wrap; gap: 0.75rem; justify-content: space-between; align-items: center; }
@@ -332,7 +346,7 @@ button.btn { font-family: var(--font-body); }
 .ways { display: grid; gap: 1rem; margin: 0; }
 .ways dt { font: 600 1.1rem/1.3 var(--font-display); color: var(--navy); }
 .ways dd { margin: 0.15rem 0 0; color: var(--muted); }
-.ways .btn { justify-self: start; margin-top: 0.25rem; }
+.ways-col { display: grid; gap: 1.25rem; justify-items: start; }
 
 /* Lesson page: tip, flashcards, culture piece, home task */
 .lesson-block {
@@ -351,7 +365,7 @@ button.btn { font-family: var(--font-body); }
 }
 .flash .pic { font-size: 4rem; line-height: 1; }
 .flash .word { font: 800 clamp(1.8rem, 6vw, 2.6rem)/1.1 var(--font-display); color: var(--navy); overflow-wrap: anywhere; }
-.flash .english { font-weight: 600; font-size: 1.2rem; color: var(--orange); visibility: hidden; }
+.flash .english { font-weight: 600; font-size: 1.2rem; color: var(--orange-ink); visibility: hidden; }
 .flash.shown .english { visibility: visible; }
 .flash-controls { display: flex; align-items: center; justify-content: center; gap: 1rem; color: var(--muted); font-variant-numeric: tabular-nums; }
 .lesson-block .hint { color: var(--muted); font-size: 0.9rem; text-align: center; max-width: none; }
@@ -384,6 +398,7 @@ button.btn { font-family: var(--font-body); }
 /* The certificate keeps its light, printed look in dark mode too. */
 .cert {
   --ink: #141a3a; --muted: #4a5170; --line: #dde0ec; --navy: #1f2f86; --orange: #e8642c; --teal: #138a8a;
+  --orange-ink: #b94515; --teal-ink: #0f7a7a;
   background: #fff; color: var(--ink); border: 3px solid var(--navy); border-radius: 6px;
   aspect-ratio: 297 / 210; display: grid; grid-template-rows: auto 1fr auto; overflow: hidden;
   container-type: inline-size; text-align: center;
@@ -391,14 +406,14 @@ button.btn { font-family: var(--font-body); }
 .cert .beads { height: 2.2cqw; background-size: 4.4cqw 2.2cqw, 4.4cqw 2.2cqw, auto; background-position: 0 0, 2.2cqw 0, 0 0; }
 .cert-body { display: grid; justify-items: center; align-content: center; gap: 1.6cqw; padding: 2cqw 6cqw; }
 .cert-body img { width: 11cqw; height: 11cqw; border-radius: 50%; }
-.cert-body .kicker { font: 600 1.5cqw/1 var(--font-body); letter-spacing: 0.3em; text-transform: uppercase; color: var(--orange); }
+.cert-body .kicker { font: 600 1.5cqw/1 var(--font-body); letter-spacing: 0.3em; text-transform: uppercase; color: var(--orange-ink); }
 .cert-body .cheer { font: 800 6cqw/1 var(--font-display); color: var(--navy); letter-spacing: -0.01em; }
 .cert-body .line { font-size: 2cqw; color: var(--muted); max-width: none; }
 .cert-body .name {
   font: 800 4.6cqw/1.15 var(--font-display); color: var(--ink); min-width: 50cqw; max-width: 84cqw;
   border-bottom: 2px solid var(--line); padding-bottom: 0.8cqw; overflow-wrap: anywhere;
 }
-.cert-body .name.empty { color: var(--line); }
+.cert-body .name.empty { color: #8a8fa8; }
 .cert-body .what { font-size: 2.1cqw; max-width: 70cqw; }
 .cert-body .what strong { color: var(--navy); }
 .cert-sign { display: flex; justify-content: space-between; gap: 4cqw; width: 100%; margin-top: 1.5cqw; font-size: 1.6cqw; color: var(--muted); }
@@ -408,7 +423,7 @@ button.btn { font-family: var(--font-body); }
   @page cert { size: A4 landscape; margin: 10mm; }
   .cert-page { page: cert; }
   body { background: #fff; }
-  body::before, .top, body > footer, .cert-tools, .cert-note, .cert-page header, body > .beads { display: none !important; }
+  body::before, .top, .skip, body > footer, .cert-tools, .cert-note, .cert-page header, body > .beads { display: none !important; }
   .cert-page { padding: 0; }
   .cert-page .wrap { max-width: none; padding: 0; display: block; }
   .cert { width: auto; height: 186mm; aspect-ratio: 297 / 210; margin: 0 auto; break-inside: avoid; }
@@ -448,7 +463,7 @@ button.btn { font-family: var(--font-body); }
   padding: 1.5rem; display: grid; gap: 1rem; align-content: space-between;
 }
 .review blockquote { margin: 0; font-size: 1.1rem; }
-.review blockquote::before { content: "“"; display: block; font: 800 3rem/0.6 var(--font-display); color: var(--orange); margin-bottom: 0.5rem; }
+.review blockquote::before { content: "“"; display: block; font: 800 3rem/0.6 var(--font-display); color: var(--orange-ink); margin-bottom: 0.5rem; }
 .review figcaption { color: var(--muted); font-size: 0.95rem; }
 .review figcaption strong { color: var(--ink); }
 .refer {
@@ -468,13 +483,14 @@ button.btn { font-family: var(--font-body); }
 .sheet-page .video[hidden], .sheet[hidden], .sheet [hidden], .cert-tools[hidden] { display: none; }
 .sheet {
   --ink: #141a3a; --muted: #4a5170; --line: #c9cee3; --navy: #1f2f86; --orange: #e8642c; --teal: #138a8a;
+  --orange-ink: #b94515; --teal-ink: #0f7a7a;
   --letters: "Andika", "Comic Sans MS", var(--font-body);
   background: #fff; color: var(--ink); border: 1px solid var(--line); border-radius: 6px;
   padding: clamp(1rem, 4vw, 2.2rem); display: grid; gap: 1.1rem; container-type: inline-size;
 }
 .sheet-head { display: grid; grid-template-columns: auto minmax(0, 1fr) minmax(0, 14rem); gap: 0.9rem; align-items: center; border-bottom: 3px solid var(--navy); padding-bottom: 0.9rem; }
 .sheet-head img { width: 56px; height: 56px; border-radius: 50%; }
-.sheet-head .kicker { font: 600 0.75rem/1 var(--font-body); letter-spacing: 0.12em; text-transform: uppercase; color: var(--orange); }
+.sheet-head .kicker { font: 600 0.75rem/1 var(--font-body); letter-spacing: 0.12em; text-transform: uppercase; color: var(--orange-ink); }
 .sheet-head h1 { font-size: 1.5rem; color: var(--navy); margin-top: 0.3rem; letter-spacing: 0; }
 .sheet-head dl { margin: 0; display: grid; gap: 0.7rem; }
 .sheet-head dl div { display: flex; gap: 0.5rem; align-items: flex-end; }
@@ -488,7 +504,7 @@ button.btn { font-family: var(--font-body); }
   display: inline-grid; place-items: center; font-size: 0.9rem;
 }
 .sheet h2 small { font: 400 0.9rem var(--font-body); color: var(--muted); }
-.sheet h2 .stars { margin-left: auto; font-size: 1.4rem; color: var(--orange); letter-spacing: 0.2em; }
+.sheet h2 .stars { margin-left: auto; font-size: 1.4rem; color: var(--orange-ink); letter-spacing: 0.2em; }
 .sheet .how { color: var(--muted); font-size: 0.95rem; max-width: none; }
 /* Handwriting lines: top, dashed middle, base. Andika's small letters are half its font size tall,
    so a font size equal to the line height puts them exactly between the middle and base lines. */

@@ -13,6 +13,7 @@
 :root {
   --bg: #f6f7fb; --surface: #ffffff; --ink: #141a3a; --muted: #4a5170; --line: #dde0ec;
   --navy: #1f2f86; --orange: #e8642c; --teal: #138a8a; --red: #c8323a; --on-accent: #ffffff;
+  --orange-ink: #b94515; --teal-ink: #0f7a7a; /* darker, for text and filled buttons */
   --font-display: "Bricolage Grotesque", "Trebuchet MS", system-ui, sans-serif;
   --font-body: "Source Sans 3", "Segoe UI", system-ui, sans-serif;
   --script-size: 1.6rem;
@@ -21,11 +22,13 @@
   :root:not([data-theme="light"]) {
     --bg: #0b0d18; --surface: #151a2e; --ink: #eef0f8; --muted: #a8aecb; --line: #2a3150;
     --navy: #8fa2ff; --orange: #f5824f; --teal: #3cc4c0; --red: #f06a70; --on-accent: #0b0d18; color-scheme: dark;
+    --orange-ink: #f5824f; --teal-ink: #3cc4c0;
   }
 }
 :root[data-theme="dark"] {
   --bg: #0b0d18; --surface: #151a2e; --ink: #eef0f8; --muted: #a8aecb; --line: #2a3150;
   --navy: #8fa2ff; --orange: #f5824f; --teal: #3cc4c0; --red: #f06a70; --on-accent: #0b0d18; color-scheme: dark;
+    --orange-ink: #f5824f; --teal-ink: #3cc4c0;
 }
 * { box-sizing: border-box; }
 body {
@@ -47,8 +50,8 @@ select { max-width: 100%; min-width: 0; flex: 1 1 12rem; text-overflow: ellipsis
 button { cursor: pointer; }
 button:hover { border-color: var(--orange); }
 button:focus-visible, select:focus-visible, .slides button:focus-visible { outline: 3px solid var(--orange); outline-offset: 2px; }
-button.primary { background: var(--orange); border-color: var(--orange); color: var(--on-accent); }
-button[aria-pressed="true"] { background: var(--teal); border-color: var(--teal); color: var(--on-accent); }
+button.primary { background: var(--orange-ink); border-color: var(--orange-ink); color: var(--on-accent); }
+button[aria-pressed="true"] { background: var(--teal-ink); border-color: var(--teal-ink); color: var(--on-accent); }
 
 .layout { display: grid; grid-template-columns: minmax(0, 1fr) 280px; gap: 1.25rem; align-items: start; }
 @media (max-width: 860px) { .layout { grid-template-columns: 1fr; } }
@@ -57,10 +60,10 @@ button[aria-pressed="true"] { background: var(--teal); border-color: var(--teal)
 .slide-head { display: flex; flex-wrap: wrap; gap: 0.4rem 1rem; align-items: baseline; justify-content: space-between; margin-bottom: 1rem; }
 .slide-head h1 { font: 800 clamp(1.4rem, 4vw, 2rem)/1.1 var(--font-display); margin: 0; color: var(--navy); }
 .slide-head .where { color: var(--muted); font-weight: 600; font-variant-numeric: tabular-nums; }
-.eyebrow { font: 600 0.75rem/1 var(--font-body); letter-spacing: 0.12em; text-transform: uppercase; color: var(--orange); }
+.eyebrow { font: 600 0.75rem/1 var(--font-body); letter-spacing: 0.12em; text-transform: uppercase; color: var(--orange-ink); }
 .script { margin-top: 0.6rem; display: grid; gap: 0.7em; font-size: var(--script-size); line-height: 1.45; }
 .script p { margin: 0; overflow-wrap: anywhere; }
-.script .cue { color: var(--teal); font-style: italic; font-size: 0.8em; }
+.script .cue { color: var(--teal-ink); font-style: italic; font-size: 0.8em; }
 .offair {
   margin-top: 1.5rem; border: 2px dashed var(--line); border-radius: 12px; padding: 0.9rem 1.1rem;
   color: var(--muted); display: grid; gap: 0.4rem;
@@ -79,7 +82,7 @@ button[aria-pressed="true"] { background: var(--teal); border-color: var(--teal)
 .slides button[aria-current="true"] { background: color-mix(in srgb, var(--navy) 12%, transparent); font-weight: 600; }
 .slides .num { color: var(--muted); font-variant-numeric: tabular-nums; }
 .slides .time { color: var(--muted); font-size: 0.85rem; font-variant-numeric: tabular-nums; }
-.slides .done .num::before { content: "✓ "; color: var(--teal); font-weight: 700; }
+.slides .done .num::before { content: "✓ "; color: var(--teal-ink); font-weight: 700; }
 .slides .done .num { font-size: 0; }
 .slides .done .num::before { font-size: 1rem; }
 .progress { color: var(--muted); font-size: 0.9rem; margin: 0 0 0.6rem; }
@@ -107,14 +110,14 @@ details.tips ul { margin: 0.7rem 0 0; padding-left: 1.1rem; display: grid; gap: 
 </head>
 <body>
 <div class="page">
-  <div class="bar">
+  <header class="bar">
     <span class="brand">HILYS <small>Recording kit · Book 1</small></span>
     <div class="tools">
       <select id="lesson" aria-label="Choose a lesson"></select>
       <button id="smaller" type="button" aria-label="Smaller text">A−</button>
       <button id="bigger" type="button" aria-label="Bigger text">A+</button>
     </div>
-  </div>
+  </header>
 
   <div class="layout">
     <main class="card">
@@ -155,7 +158,7 @@ details.tips ul { margin: 0.7rem 0 0; padding-left: 1.1rem; display: grid; gap: 
   </div>
 </div>
 
-<div class="dock">
+<footer class="dock" aria-label="Slide controls">
   <div class="dock-in">
     <div class="group">
       <button id="prev" type="button">← Back</button>
@@ -170,7 +173,7 @@ details.tips ul { margin: 0.7rem 0 0; padding-left: 1.1rem; display: grid; gap: 
       <button id="done" type="button" aria-pressed="false">Mark recorded</button>
     </div>
   </div>
-</div>
+</footer>
 
 <script src="book1/recording-data.js"></script>
 <script>

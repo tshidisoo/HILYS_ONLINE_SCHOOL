@@ -70,3 +70,7 @@ By lesson 4, a Beginner child should be able to:
 - count to 10
 - name 5 colours and 3 Ndebele foods
 - answer *Cosi!* when a story starts
+
+## End of Book 1
+
+Before giving the Book 1 certificate, do the short spoken check in [book1-assessment.md](book1-assessment.md).
