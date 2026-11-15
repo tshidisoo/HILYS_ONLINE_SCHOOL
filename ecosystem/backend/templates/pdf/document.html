@@ -1,0 +1,76 @@
+{% extends "pdf/base.html" %}
+{% block body %}
+<header>
+  <div class="brand">{% if logo %}<img src="{{ logo }}" alt="">{% endif %}
+    <div><b>{{ company.name }}</b><span>{% if company.email %}{{ company.email }}{% endif %}{% if company.whatsapp %} · WhatsApp {{ company.whatsapp }}{% endif %}<br>{{ company.website }}</span></div></div>
+  <div class="title"><h1>{{ doc.get_kind_display }}</h1>
+    <div class="no">{{ doc.number|default:"DRAFT" }}</div>
+    {% if doc.status == "paid" and doc.kind == "invoice" %}<div style="margin-top:3mm"><span class="stamp">PAID</span></div>{% endif %}
+    {% if doc.status == "cancelled" %}<div style="margin-top:3mm"><span class="stamp void">CANCELLED</span></div>{% endif %}
+  </div>
+</header>
+
+<div class="meta">
+  <div class="box"><h3>{% if doc.kind == "receipt" %}Received from{% else %}For{% endif %}</h3>
+    <b>{{ doc.family.payer_name|default:doc.family.parent_name }}</b><br>
+    {% if doc.family.email %}{{ doc.family.email }}<br>{% endif %}{% if doc.family.phone %}{{ doc.family.phone }}<br>{% endif %}
+    {% if doc.family.city %}{{ doc.family.city }}{% endif %}{% if doc.family.country %} ({{ doc.family.country }}){% endif %}
+  </div>
+  <div class="box"><dl>
+    <dt>Date</dt><dd>{{ doc.issue_date|date:"j M Y"|default:"—" }}</dd>
+    {% if doc.kind == "invoice" %}<dt>Due</dt><dd>{{ doc.due_date|date:"j M Y" }}</dd>{% endif %}
+    {% if doc.kind == "quotation" %}<dt>Valid until</dt><dd>{{ doc.due_date|date:"j M Y" }}</dd>{% endif %}
+    {% if doc.period %}<dt>For the month</dt><dd>{{ doc.period }}</dd>{% endif %}
+    {% if doc.related %}<dt>{% if doc.kind == "credit_note" or doc.kind == "payment_plan" %}Invoice{% else %}From{% endif %}</dt><dd>{{ doc.related.number }}</dd>{% endif %}
+    <dt>Currency</dt><dd>{{ doc.currency }}</dd>
+  </dl></div>
+</div>
+
+{% if doc.kind == "statement" %}
+  <table><thead><tr><th>Date</th><th>What</th><th>Reference</th><th class="num">Amount</th><th class="num">Balance</th></tr></thead><tbody>
+  {% for r in rows %}<tr><td>{{ r.date|date:"j M Y" }}</td><td>{{ r.what }}</td><td>{{ r.reference }}</td><td class="num">{{ r.amount }}</td><td class="num">{{ r.balance }}</td></tr>
+  {% empty %}<tr><td colspan="5">Nothing to show yet.</td></tr>{% endfor %}
+  </tbody></table>
+  <div class="totals"><div class="grand"><span>Balance owed</span><span>{{ doc.currency }} {{ doc.total }}</span></div></div>
+{% elif doc.kind == "receipt" %}
+  <table><thead><tr><th>Payment</th><th>Reference</th><th class="num">Amount</th></tr></thead><tbody>
+  <tr><td>{{ doc.payment.get_method_display }} received {{ doc.payment.received_on|date:"j M Y" }}</td><td>{{ doc.payment.reference }}</td><td class="num">{{ doc.payment.amount }}</td></tr>
+  {% for a in allocations %}<tr><td style="color:{{ t.MUTED }}">Paid towards {{ a.invoice.number }}</td><td></td><td class="num" style="color:{{ t.MUTED }}">{{ a.amount }}</td></tr>{% endfor %}
+  </tbody></table>
+  <div class="totals"><div class="grand"><span>Received</span><span>{{ doc.currency }} {{ doc.total }}</span></div></div>
+  <p style="margin-top:6mm">Ngiyabonga! Thank you for your payment.</p>
+{% elif doc.kind == "agreement" %}
+  <h2>Enrolment agreement</h2>
+  <p>This agreement is between {{ company.name }} and {{ doc.family.parent_name }} for lessons for:
+    {% for s in students %}<b>{{ s.name }}</b>{% if not forloop.last %}, {% endif %}{% endfor %}.</p>
+  <ol>
+    <li>Lessons are 30 minutes, live on Zoom, at the times agreed. A parent or carer is nearby during lessons.</li>
+    <li>Packages are paid at the start of each month. A month counts as 4 lessons for each weekly lesson time.</li>
+    <li>A lesson moved with at least 24 hours' notice is moved, not lost. A lesson missed without notice counts as used.</li>
+    <li>If HILYS cancels a lesson, or a lesson is cut short by power or internet problems, a make-up lesson is offered.</li>
+    <li>You can change or stop your package at the end of any month by telling us before your next payment.</li>
+    <li>We keep your family's details only to run lessons and billing, and you can ask to see or delete them at any time.</li>
+  </ol>
+  <div class="draft">DRAFT WORDING: to be approved by the owner and reviewed by a lawyer before use.</div>
+  <table style="margin-top:12mm"><tr><td style="border:0;width:50%">Parent: ______________________<br><br>Date: __________</td><td style="border:0">For {{ company.short_name }}: ______________________<br><br>Date: __________</td></tr></table>
+{% else %}
+  <table><thead><tr><th>Description</th><th class="num">Qty</th><th class="num">Price</th><th class="num">Amount</th></tr></thead><tbody>
+  {% for l in lines %}<tr><td>{{ l.description }}{% if l.student %}<br><span style="color:{{ t.MUTED }}">{{ l.student.name }}</span>{% endif %}</td><td class="num">{{ l.quantity|floatformat:"-2" }}</td><td class="num">{{ l.unit_price }}</td><td class="num">{{ l.amount }}</td></tr>
+  {% empty %}<tr><td colspan="4">No lines.</td></tr>{% endfor %}
+  </tbody></table>
+  <div class="totals">
+    <div class="grand"><span>Total</span><span>{{ doc.currency }} {{ doc.total }}</span></div>
+    {% if doc.kind == "invoice" %}
+      {% if credited %}<div><span>Credited</span><span>{{ credited }}</span></div>{% endif %}
+      <div><span>Paid</span><span>{{ paid }}</span></div>
+      <div style="font-weight:700"><span>Still to pay</span><span>{{ doc.currency }} {{ outstanding }}</span></div>
+    {% endif %}
+  </div>
+  {% if installments %}<h2>Instalments</h2><table><thead><tr><th>Due</th><th class="num">Amount</th></tr></thead><tbody>
+    {% for i in installments %}<tr><td>{{ i.due_date|date:"j M Y" }}</td><td class="num">{{ doc.currency }} {{ i.amount }}</td></tr>{% endfor %}</tbody></table>{% endif %}
+  {% if doc.kind == "invoice" or doc.kind == "quotation" or doc.kind == "payment_plan" %}<div class="notes"><b>How to pay.</b> {{ company.payment_details }}</div>{% endif %}
+{% endif %}
+{% if doc.notes and doc.kind != "statement" and doc.kind != "receipt" %}<p style="margin-top:6mm;color:{{ t.MUTED }}">{{ doc.notes }}</p>{% endif %}
+{% if doc.amended_reason %}<p style="color:{{ t.MUTED }};font-size:8.5pt">Amended: {{ doc.amended_reason }}</p>{% endif %}
+{% if doc.number %}<div class="verify"><img src="{{ qr }}" alt=""><div>Check this document is genuine:<br><b>{{ verify_url }}</b><br>Code {{ doc.verify_code }}</div></div>{% endif %}
+{% endblock %}

@@ -1,0 +1,20 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex"><title>{% block title %}{% endblock %} · {{ company.short_name }}</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,800&family=Source+Sans+3:wght@400;600&display=swap">
+<style>
+:root{--bg:#f6f7fb;--surface:#fff;--ink:#141a3a;--muted:#4a5170;--line:#dde0ec;--navy:#1f2f86;--orange:#e8642c;--orange-ink:#b94515;--teal-ink:#0f7a7a;--bad:#b3261e}
+@media (prefers-color-scheme:dark){:root{--bg:#0b0d18;--surface:#151a2e;--ink:#eef0f8;--muted:#a8aecb;--line:#2a3150;--navy:#8fa2ff;--orange-ink:#f5824f;--teal-ink:#3cc4c0;--bad:#f06a70}}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:400 1.0625rem/1.6 "Source Sans 3",system-ui,sans-serif}
+.beads{height:10px;background:linear-gradient(135deg,var(--orange) 25%,transparent 25%) 0 0/20px 10px,linear-gradient(225deg,#138a8a 25%,transparent 25%) 10px 0/20px 10px,var(--navy)}
+main{max-width:640px;margin:0 auto;padding:2.5rem 16px 4rem}h1{font:800 clamp(1.8rem,5vw,2.4rem)/1.1 "Bricolage Grotesque",sans-serif;margin:.5rem 0 1rem}
+.eyebrow{font-weight:600;font-size:.8rem;letter-spacing:.12em;text-transform:uppercase;color:var(--orange-ink)}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:1.25rem 1.4rem;margin-top:1rem}
+dl{display:grid;grid-template-columns:auto 1fr;gap:.4rem 1.2rem;margin:0}dt{color:var(--muted)}dd{margin:0;font-weight:600}
+.ok{color:var(--teal-ink);font-weight:600}.bad{color:var(--bad);font-weight:600}a{color:var(--navy)}
+label{display:block;font-weight:600;margin:1rem 0 .3rem}textarea,input[type=text]{width:100%;font:inherit;padding:.6rem .8rem;border-radius:10px;border:1px solid var(--line);background:var(--surface);color:var(--ink)}
+.scale{display:flex;gap:.5rem;flex-wrap:wrap}.scale label{margin:0;font-weight:400;border:1px solid var(--line);border-radius:10px;padding:.5rem .9rem;cursor:pointer;background:var(--surface)}
+button{margin-top:1.4rem;font:600 1rem "Source Sans 3",sans-serif;background:var(--orange-ink);color:#fff;border:0;border-radius:999px;padding:.8rem 1.4rem;cursor:pointer}
+:focus-visible{outline:3px solid var(--orange);outline-offset:3px}.err{color:var(--bad);font-weight:600}
+</style></head><body><div class="beads"></div><main>{% block body %}{% endblock %}</main></body></html>
