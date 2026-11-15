@@ -22,9 +22,13 @@ A plain HTML site for HILYS Languages & Culture Centre: online isiNdebele lesson
 | `public/404.html` | Page shown for broken links |
 | `public/assets/site.css` | Shared styles for every page |
 | `public/assets/logo.jpg` | Logo |
+| `public/sitemap.xml`, `public/robots.txt` | Tell Google which pages to list |
+| `public/assets/share.png` | The picture shown when a link to the site is shared on WhatsApp |
+| `scripts/set_site_address.py` | Changes the site's web address everywhere when you move to your own domain |
 | `firebase.json` | Firebase Hosting settings (serves the `public` folder) |
 | `docs/whatsapp-messages.md` | Message drafts for the first families (not part of the website) |
 | `docs/pilot-feedback.md` | Video pilot: the message, the 10 questions for the five families, and how to read the answers |
+| `docs/curriculum/book1-assessment.md` | End-of-book spoken check for the teacher, done before giving the Book 1 certificate |
 | `docs/curriculum/` | Free-trial lesson with level check, and Beginner lessons 1–4 |
 | `materials/recording-kit.html` | Teleprompter for recording the Book 1 videos: each slide's script, notes and timing |
 | `scripts/make_recording_kit.py` | Rebuilds the recording kit's scripts (`materials/book1/recording-data.js`) from `lessons.py` |
@@ -102,4 +106,16 @@ firebase deploy --only hosting
 
 The site goes live at `https://hilys-languages.web.app`. You can connect your own domain later in the Firebase console under Hosting, then Add custom domain.
 
-After you have a domain, change `og:image` in `public/index.html` to the full address (for example `https://hilys.com/assets/logo.jpg`) so WhatsApp link previews show the logo.
+## Link previews and Google
+
+Every page carries the site's web address for WhatsApp link previews, Google and the sitemap. It is set to `https://hilys-languages.web.app`. If your Firebase address is different, or when you connect your own domain, run this once and deploy again:
+
+```bash
+python scripts/set_site_address.py https://hilys.com
+```
+
+Lesson, worksheet, certificate and teacher pages are kept out of Google on purpose. After deploying, you can check a link preview by sending the address to yourself on WhatsApp.
+
+## Colours and accessibility
+
+`--orange` and `--teal` in `public/assets/site.css` are for decoration (the bead strip, dots, borders). For text and filled buttons use `--orange-ink` and `--teal-ink`: the plain colours are too pale to read comfortably as small text or behind white text.
