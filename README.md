@@ -58,6 +58,8 @@ var CONFIG = {
 
 While these are empty, the buttons are greyed out and the page says "Online booking opens soon".
 
+**Enquiry forms:** the free-trial and waiting-list buttons open a short form that sends straight into the HILYS management system (`ecosystem/`), where each enquiry arrives as a lead. Set `apiUrl` in `public/assets/site.js` to the system's address once it is online. While it is empty, the live site falls back to WhatsApp and the booking link, and a copy running on your own computer uses the local system.
+
 **Parent reviews and the referral offer:** in the same file, add real reviews to the `reviews` list and write your offer in `referralOffer`. The "What parents say" section on the home page stays hidden while both are empty. Only add words a parent really said, and ask them first.
 
 ## Video course (Book 1)
