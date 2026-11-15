@@ -1,0 +1,15 @@
+# Local development only: Postgres and Redis. Production runs without Docker (see docs/deploy-2026-11-first-setup.md).
+services:
+  postgres:
+    image: postgres:16
+    environment:
+      POSTGRES_DB: hilys
+      POSTGRES_USER: hilys
+      POSTGRES_PASSWORD: hilys-dev
+    ports: ["127.0.0.1:5432:5432"]
+    volumes: [pgdata:/var/lib/postgresql/data]
+  redis:
+    image: redis:7
+    ports: ["127.0.0.1:6379:6379"]
+volumes:
+  pgdata:

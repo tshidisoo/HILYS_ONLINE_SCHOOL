@@ -1,0 +1,32 @@
+.state { display: grid; gap: 6px; justify-items: center; text-align: center; padding: 40px 16px; color: var(--muted); }
+.state strong { color: var(--ink); font-size: 16px; }
+.state-error strong { color: var(--bad); }
+.spinner { width: 22px; height: 22px; border: 3px solid var(--line); border-top-color: var(--navy); border-radius: 50%; animation: spin .8s linear infinite; }
+@keyframes spin { to { transform: rotate(360deg); } }
+@media (prefers-reduced-motion: reduce) { .spinner { animation: none; } }
+
+.overlay { position: fixed; inset: 0; z-index: 60; background: rgb(11 13 24 / 0.45); display: grid; place-items: center; padding: 16px; }
+.overlay-panel { place-items: stretch end; padding: 0; }
+.dialog { background: var(--surface); border-radius: 16px; width: min(520px, 100%); max-height: calc(100vh - 32px); display: flex; flex-direction: column; box-shadow: var(--shadow); }
+.dialog-wide { width: min(820px, 100%); }
+.dialog-head, .panel-head { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; padding: 18px 20px 10px; }
+.dialog-body { padding: 4px 20px 16px; overflow: auto; display: grid; gap: 14px; }
+.dialog-foot { display: flex; justify-content: flex-end; gap: 10px; padding: 12px 20px 18px; border-top: 1px solid var(--line); flex-wrap: wrap; }
+.icon-btn { width: 36px; height: 36px; border-radius: 50%; border: 1px solid var(--line); background: var(--surface); font-size: 22px; line-height: 1; cursor: pointer; color: var(--muted); flex: none; }
+.icon-btn:hover { color: var(--ink); border-color: var(--muted); }
+
+.panel { background: var(--surface); width: min(760px, 100vw); height: 100%; display: flex; flex-direction: column; box-shadow: var(--shadow); }
+.panel-actions { display: flex; gap: 8px; flex-wrap: wrap; padding: 0 20px 12px; }
+.panel-body { padding: 16px 20px 32px; overflow: auto; display: grid; gap: 16px; align-content: start; }
+.tabs { display: flex; gap: 4px; padding: 0 20px; border-bottom: 1px solid var(--line); overflow-x: auto; }
+.tab { border: 0; background: none; padding: 10px 12px; font-weight: 600; color: var(--muted); border-bottom: 3px solid transparent; cursor: pointer; white-space: nowrap; }
+.tab.on { color: var(--navy); border-bottom-color: var(--orange-ink); }
+
+.stat { display: grid; gap: 2px; }
+.stat-value { font: 800 24px/1.1 var(--font-display); }
+.stat-label { color: var(--muted); font-size: 13px; }
+
+.dl { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px 20px; margin: 0; }
+.dl dt { color: var(--muted); font-size: 13px; }
+.dl dd { margin: 2px 0 0; font-weight: 600; overflow-wrap: anywhere; }
+@media (max-width: 560px) { .dl { grid-template-columns: 1fr; } }

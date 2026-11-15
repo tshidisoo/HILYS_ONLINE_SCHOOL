@@ -571,3 +571,24 @@ button.btn { font-family: var(--font-body); }
 .result h2 { color: var(--navy); font-size: clamp(2rem, 6vw, 3rem); }
 .result ul { margin: 0; padding-left: 1.2rem; display: grid; gap: 0.5rem; color: var(--muted); max-width: 65ch; }
 .result-actions { display: flex; flex-wrap: wrap; gap: 0.75rem; margin-top: 0.25rem; }
+
+/* Enquiry form (website → management system) */
+.enquiry { width: min(620px, calc(100vw - 32px)); max-height: calc(100vh - 32px); border: 0; border-radius: 18px; padding: 0; background: var(--surface); color: var(--ink); box-shadow: 0 20px 60px rgb(20 26 58 / .3); }
+.enquiry::backdrop { background: rgb(11 13 24 / .5); }
+.enquiry form, .enq-done { padding: 22px 24px 24px; display: grid; gap: 14px; }
+.enq-head { display: flex; justify-content: space-between; gap: 12px; align-items: flex-start; }
+.enq-head h2 { font-size: clamp(1.4rem, 3vw, 1.7rem); }
+.enq-close { width: 40px; height: 40px; flex: none; border-radius: 50%; border: 1px solid var(--line); background: var(--surface); color: var(--muted); font-size: 24px; line-height: 1; cursor: pointer; }
+.enq-done .enq-close { width: auto; height: auto; justify-self: start; border-radius: 999px; font-size: 1rem; color: var(--navy); }
+.enq-lede, .enq-small { color: var(--muted); margin: 0; }
+.enq-small { font-size: .9rem; }
+.enq-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px 14px; }
+.enq-grid label { display: grid; gap: 4px; font-weight: 600; font-size: .95rem; }
+.enq-grid input, .enq-grid select, .enq-grid textarea { font: inherit; font-weight: 400; padding: .6rem .75rem; border: 1px solid var(--line); border-radius: 10px; background: var(--bg); color: var(--ink); width: 100%; }
+.enq-grid input:focus-visible, .enq-grid select:focus-visible, .enq-grid textarea:focus-visible { outline: 3px solid var(--orange); outline-offset: 1px; }
+.enq-wide { grid-column: 1 / -1; }
+.enquiry [hidden] { display: none !important; }
+.enq-trap { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+.enq-error { margin: 0; color: #b3261e; font-weight: 600; }
+.enq-actions { display: flex; gap: 14px; align-items: center; flex-wrap: wrap; }
+@media (max-width: 560px) { .enq-grid { grid-template-columns: 1fr; } .enquiry form { padding: 18px 16px 20px; } }

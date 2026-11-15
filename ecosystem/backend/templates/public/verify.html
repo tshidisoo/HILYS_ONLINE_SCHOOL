@@ -1,0 +1,10 @@
+{% extends "public/base.html" %}{% block title %}Check a document{% endblock %}
+{% block body %}<span class="eyebrow">{{ company.name }}</span><h1>Check a document</h1>
+{% if doc %}<p class="ok">✓ This is a genuine {{ doc.get_kind_display|lower }} from {{ company.short_name }}.</p>
+<div class="card"><dl><dt>Document</dt><dd>{{ doc.get_kind_display }} {{ doc.number }}</dd><dt>Date</dt><dd>{{ doc.issue_date|date:"j F Y" }}</dd>
+<dt>For</dt><dd>{{ doc.family.payer_name|default:doc.family.parent_name }}</dd><dt>Amount</dt><dd>{{ doc.currency }} {{ doc.total }}</dd>
+<dt>Status</dt><dd>{% if doc.status == "cancelled" %}<span class="bad">Cancelled: no longer valid</span>{% else %}{{ doc.get_status_display }}{% endif %}</dd></dl></div>
+{% elif cert %}<p class="ok">✓ This is a genuine certificate from {{ company.short_name }}.</p>
+<div class="card"><dl><dt>Certificate</dt><dd>{{ cert.number }}</dd><dt>Given to</dt><dd>{{ cert.student.name }}</dd><dt>For</dt><dd>{{ cert.book.title }}</dd><dt>Date</dt><dd>{{ cert.issued_on|date:"j F Y" }}</dd></dl></div>
+{% elif busy %}<p class="bad">Too many checks from here. Please try again in an hour.</p>{% else %}<p class="bad">We could not find a document with the code {{ code }}.</p><p>Check the code on the document and try again, or message {{ company.short_name }}.</p>{% endif %}
+{% endblock %}

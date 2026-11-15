@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><style>
+  @page { size: A4 landscape; margin: 0; }
+  body { margin: 0; font: 12pt {{ t.FONT_BODY|safe }}; color: {{ t.INK }}; }
+  .page { height: 210mm; display: flex; flex-direction: column; border: 3mm solid {{ t.NAVY }}; }
+  .beads { height: 7mm; background: repeating-linear-gradient(90deg, {{ t.ORANGE }} 0 12px, {{ t.TEAL }} 12px 24px, {{ t.NAVY }} 24px 36px); }
+  .body { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; gap: 4mm; padding: 0 25mm; }
+  img.logo { width: 32mm; height: 32mm; border-radius: 50%; }
+  .kicker { letter-spacing: .3em; text-transform: uppercase; color: {{ t.ORANGE_INK }}; font-weight: 700; font-size: 10pt; }
+  .cheer { font: 800 36pt {{ t.FONT_DISPLAY|safe }}; color: {{ t.NAVY }}; }
+  .name { font: 800 28pt {{ t.FONT_DISPLAY|safe }}; border-bottom: 1pt solid {{ t.LINE }}; padding: 0 10mm 2mm; min-width: 140mm; }
+  .sign { display: flex; justify-content: space-between; width: 100%; margin-top: 8mm; font-size: 9.5pt; color: {{ t.MUTED }}; }
+  .sign div { width: 45%; border-top: .7pt solid {{ t.MUTED }}; padding-top: 2mm; }
+  .sign b { display: block; color: {{ t.INK }}; }
+  .verify { position: absolute; right: 18mm; bottom: 16mm; display: flex; gap: 3mm; align-items: center; font-size: 7.5pt; color: {{ t.MUTED }}; text-align: left; }
+  .verify img { width: 18mm; }
+</style></head><body>
+<div class="page"><div class="beads"></div><div class="body">
+  {% if logo %}<img class="logo" src="{{ logo }}" alt="">{% endif %}
+  <div class="kicker">Certificate · {{ cert.number }}</div>
+  <div class="cheer">Sizwe kakhulu!</div>
+  <div>Very well done! This certificate is given to</div>
+  <div class="name">{{ cert.student.name }}</div>
+  <div>for finishing <b style="color:{{ t.NAVY }}">{{ cert.book.title }}</b> of isiNdebele: the 5 vowels, 20 sounds and 3 clicks.</div>
+  <div class="sign"><div><b>{{ cert.book_check.teacher.display_name|default:"Sija" }}</b>Teacher, {{ company.name }}</div><div><b>{{ cert.issued_on|date:"j F Y" }}</b>Date</div></div>
+</div><div class="beads"></div></div>
+<div class="verify"><img src="{{ qr }}" alt=""><div>Check it is genuine:<br>{{ verify_url }}</div></div>
+</body></html>

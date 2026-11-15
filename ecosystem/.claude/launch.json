@@ -1,0 +1,10 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    { "name": "api", "runtimeExecutable": "backend/.venv/bin/python", "runtimeArgs": ["backend/manage.py", "runserver", "127.0.0.1:8000"], "port": 8000 },
+    { "name": "staff-app", "runtimeExecutable": "npm", "runtimeArgs": ["--prefix", "staff-app", "run", "dev"], "port": 3000 },
+    { "name": "teacher-portal", "runtimeExecutable": "npm", "runtimeArgs": ["--prefix", "teacher-portal", "run", "dev"], "port": 3001 },
+    { "name": "parent-app-web", "runtimeExecutable": "python3", "runtimeArgs": ["-m", "http.server", "3002", "--directory", "mobile/build/web"], "port": 3002 },
+    { "name": "website", "runtimeExecutable": "python3", "runtimeArgs": ["-m", "http.server", "5500", "--directory", "../public"], "port": 5500 }
+  ]
+}

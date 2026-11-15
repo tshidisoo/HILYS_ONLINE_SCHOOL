@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<style>
+  @page { size: A4; margin: 16mm 16mm 20mm;
+    @bottom-left { content: "{{ company.name|safe }} · {{ company.motto|safe }}"; font: 8pt {{ t.FONT_BODY|safe }}; color: {{ t.MUTED }}; }
+    @bottom-right { content: "Page " counter(page) " of " counter(pages); font: 8pt {{ t.FONT_BODY|safe }}; color: {{ t.MUTED }}; } }
+  * { box-sizing: border-box; }
+  body { font: 10pt/1.45 {{ t.FONT_BODY|safe }}; color: {{ t.INK }}; margin: 0; }
+  .beads { height: 6px; background: repeating-linear-gradient(90deg, {{ t.ORANGE }} 0 10px, {{ t.TEAL }} 10px 20px, {{ t.NAVY }} 20px 30px); margin-bottom: 8mm; }
+  header { display: flex; justify-content: space-between; align-items: flex-start; gap: 10mm; }
+  .brand { display: flex; gap: 4mm; align-items: center; }
+  .brand img { width: 18mm; height: 18mm; border-radius: 50%; }
+  header .brand { flex: 1; min-width: 0; }
+  header .title { flex: none; }
+  .brand b { font: 800 15pt {{ t.FONT_DISPLAY|safe }}; color: {{ t.NAVY }}; display: block; }
+  .brand span { color: {{ t.MUTED }}; font-size: 9pt; }
+  .title { text-align: right; }
+  .title h1 { font: 800 20pt {{ t.FONT_DISPLAY|safe }}; color: {{ t.NAVY }}; margin: 0; }
+  .title .no { font-weight: 700; color: {{ t.ORANGE_INK }}; }
+  .meta { margin-top: 8mm; display: flex; justify-content: space-between; gap: 10mm; }
+  .meta .box:last-child { flex: none; min-width: 64mm; }
+  .box h3 { font: 700 8pt {{ t.FONT_BODY|safe }}; letter-spacing: .1em; text-transform: uppercase; color: {{ t.TEAL_INK }}; margin: 0 0 1.5mm; }
+  dl { display: grid; grid-template-columns: auto auto; gap: 1mm 5mm; margin: 0; }
+  dt { color: {{ t.MUTED }}; white-space: nowrap; } dd { margin: 0; text-align: right; font-weight: 600; white-space: nowrap; }
+  table { width: 100%; border-collapse: collapse; margin-top: 8mm; }
+  th { text-align: left; font-size: 8pt; text-transform: uppercase; letter-spacing: .08em; color: {{ t.MUTED }}; border-bottom: 1.5pt solid {{ t.NAVY }}; padding: 2mm 1mm; }
+  td { border-bottom: .5pt solid {{ t.LINE }}; padding: 2.4mm 1mm; vertical-align: top; }
+  tr { page-break-inside: avoid; }
+  .num { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
+  .totals { margin-left: auto; width: 75mm; margin-top: 5mm; }
+  .totals div { display: flex; justify-content: space-between; padding: 1.2mm 0; }
+  .totals .grand { border-top: 1.5pt solid {{ t.NAVY }}; font: 800 13pt {{ t.FONT_DISPLAY|safe }}; color: {{ t.NAVY }}; margin-top: 1mm; padding-top: 2mm; }
+  .stamp { display: inline-block; border: 2pt solid {{ t.TEAL_INK }}; color: {{ t.TEAL_INK }}; font: 800 14pt {{ t.FONT_DISPLAY|safe }}; padding: 1mm 4mm; transform: rotate(-6deg); border-radius: 2mm; }
+  .stamp.void { border-color: #b3261e; color: #b3261e; }
+  .notes { margin-top: 8mm; padding: 4mm; background: #f6f7fb; border-left: 3pt solid {{ t.ORANGE }}; }
+  .draft { margin-top: 6mm; padding: 3mm 4mm; border: 1pt dashed #b3261e; color: #b3261e; font-weight: 600; }
+  .verify { margin-top: 10mm; display: flex; gap: 4mm; align-items: center; color: {{ t.MUTED }}; font-size: 8.5pt; page-break-inside: avoid; }
+  .verify img { width: 22mm; height: 22mm; }
+  h2 { font: 700 12pt {{ t.FONT_DISPLAY|safe }}; color: {{ t.NAVY }}; margin: 8mm 0 2mm; }
+  ol li { margin-bottom: 2mm; }
+</style></head>
+<body>
+<div class="beads"></div>
+{% block body %}{% endblock %}
+</body></html>

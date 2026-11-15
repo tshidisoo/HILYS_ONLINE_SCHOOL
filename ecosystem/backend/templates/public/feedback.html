@@ -1,0 +1,15 @@
+{% extends "public/base.html" %}{% block title %}Your feedback{% endblock %}
+{% block body %}<span class="eyebrow">{{ company.name }}</span>
+{% if not fb %}<h1>This link has expired</h1><p>Please message us if you'd like to share your thoughts.</p>
+{% elif done %}<h1>Ngiyabonga!</h1><p>Thank you for your feedback. It helps us teach better.</p>
+{% else %}<h1>How are lessons going?</h1><p>Two minutes, five questions. Only the owner of {{ company.short_name }} reads your answers.</p>
+<form method="post" class="card">{% csrf_token %}{% for e in errors %}<p class="err" role="alert">{{ e }}</p>{% endfor %}
+<fieldset style="border:0;padding:0;margin:0"><legend style="font-weight:600">How happy are you with the lessons? (1 = not happy, 5 = very happy)</legend>
+<div class="scale">{% for n in "12345" %}<label><input type="radio" name="rating" value="{{ n }}"> {{ n }}</label>{% endfor %}</div></fieldset>
+<fieldset style="border:0;padding:0;margin:1rem 0 0"><legend style="font-weight:600">Would you recommend HILYS to another family?</legend>
+<div class="scale"><label><input type="radio" name="recommend" value="yes"> Yes</label><label><input type="radio" name="recommend" value="no"> Not yet</label></div></fieldset>
+<label for="best">What has your child enjoyed most?</label><textarea id="best" name="best" rows="3"></textarea>
+<label for="improve">What could we do better?</label><textarea id="improve" name="improve" rows="3"></textarea>
+<label style="font-weight:400"><input type="checkbox" name="may_quote"> You may quote my answer on the website (first name and city only)</label>
+<button type="submit">Send my feedback</button></form>{% endif %}
+{% endblock %}

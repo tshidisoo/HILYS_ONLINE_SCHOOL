@@ -1,0 +1,26 @@
+.chart { margin: 0; display: grid; gap: 10px; }
+.chart-head { display: flex; justify-content: space-between; gap: 12px; align-items: baseline; }
+.chart-head figcaption { font-weight: 600; }
+.chart-legend { display: flex; gap: 16px; flex-wrap: wrap; font-size: 13px; color: var(--muted); }
+.chart-legend i { display: inline-block; width: 12px; height: 12px; border-radius: 3px; margin-right: 6px; vertical-align: -1px; }
+.col-chart { display: grid; grid-template-columns: auto 1fr; gap: 8px; padding-bottom: 24px; }
+.col-axis { display: flex; flex-direction: column; justify-content: space-between; font-size: 12px; color: var(--muted); text-align: right; margin-bottom: -6px; margin-top: -6px; }
+.col-plot { position: relative; display: flex; align-items: stretch; gap: 4px; border-bottom: 1px solid var(--line); }
+.col-grid { position: absolute; left: 0; right: 0; height: 1px; background: var(--line); }
+.col-group { flex: 1; position: relative; display: flex; flex-direction: column; align-items: center; }
+.col-bars { flex: 1; display: flex; align-items: flex-end; gap: 2px; width: 100%; justify-content: center; }
+.col-bar { width: 100%; max-width: 24px; border: 0; padding: 0; border-radius: 4px 4px 0 0; cursor: pointer; position: relative; z-index: 1; }
+.col-bar:hover, .col-bar:focus-visible { filter: brightness(1.15); }
+.col-label { position: absolute; bottom: -22px; font-size: 12px; color: var(--muted); white-space: nowrap; }
+.chart-tip { position: absolute; bottom: calc(100% + 4px); left: 50%; transform: translateX(-50%); z-index: 5; background: var(--surface); border: 1px solid var(--line);
+  box-shadow: var(--shadow); border-radius: 8px; padding: 6px 10px; display: grid; white-space: nowrap; font-size: 13px; pointer-events: none; }
+.chart-tip span { color: var(--muted); }
+.chart-table { width: 100%; border-collapse: collapse; font-size: 14px; }
+.chart-table th, .chart-table td { padding: 6px 8px; border-bottom: 1px solid var(--line); text-align: left; }
+.chart-table .num { text-align: right; font-variant-numeric: tabular-nums; }
+.bar-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
+.bar-list li { display: grid; grid-template-columns: minmax(90px, 160px) 1fr auto; gap: 10px; align-items: center; font-size: 14px; }
+.bar-name { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.bar-track { height: 14px; display: block; }
+.bar-fill { display: block; height: 100%; border-radius: 0 4px 4px 0; min-width: 2px; }
+.bar-value { font-weight: 700; font-variant-numeric: tabular-nums; }

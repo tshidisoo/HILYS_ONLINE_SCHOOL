@@ -147,7 +147,10 @@
 
     // With a WhatsApp number set, the button sends the result so the teacher sees it before the trial.
     var trial = document.querySelector("[data-trial]");
-    if (CONFIG.whatsappNumber) {
+    if (CONFIG.api) {
+      trial.setAttribute("data-level", level.toLowerCase());
+      trial.onclick = function (e) { e.preventDefault(); openEnquiry("live", level.toLowerCase()); };
+    } else if (CONFIG.whatsappNumber) {
       var text = "Hello HILYS, the level check suggested " + level + " for my child (age " + a.age + "). I'd like to book a free trial lesson.";
       trial.href = "https://wa.me/" + CONFIG.whatsappNumber + "?text=" + encodeURIComponent(text);
       trial.target = "_blank"; trial.rel = "noopener";

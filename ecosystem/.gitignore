@@ -1,0 +1,32 @@
+# Secrets and local state
+.env
+*.env
+!.env.example
+.claude/dev/
+backend/media/
+backend/staticfiles/
+*.sqlite3
+*.dump
+*.sql.gz
+
+# Python
+.venv/
+__pycache__/
+*.pyc
+
+# Node and builds
+node_modules/
+dist/
+build/
+.vite/
+
+# Flutter
+mobile/.dart_tool/
+mobile/build/
+mobile/.flutter-plugins*
+mobile/.packages
+mobile/.metadata
+
+# OS
+.DS_Store
+Thumbs.db
