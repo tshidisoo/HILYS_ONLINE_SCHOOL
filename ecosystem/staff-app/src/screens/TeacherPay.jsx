@@ -22,7 +22,7 @@ export default function TeacherPay() {
       {loading && !data ? <Loading /> : error ? <ErrorState error={error} onRetry={reload} /> : rows.length === 0 ? <Empty title={`No statements for ${month} yet`} action={<button className="btn btn-primary btn-sm" onClick={build}>Work them out</button>}>They are made from each teacher's reported lessons.</Empty> : (
         <div className="stack">{rows.map((s) => (
           <div key={s.id} className="card">
-            <div className="row"><h2>{s.teacher_name}</h2><Pill status={s.status}>{s.status_label}</Pill>{s.unreported > 0 && <Pill tone="warn">{s.unreported} lessons not reported</Pill>}<div className="spacer" />
+            <div className="row"><h2>{s.teacher_name}</h2><Pill status={s.status}>{s.status_label}</Pill>{s.unreported > 0 && <Pill tone="warn">{s.unreported} {s.unreported === 1 ? "lesson" : "lessons"} not reported</Pill>}<div className="spacer" />
               <strong style={{ fontSize: 20 }}>{money(s.total, s.currency)}</strong></div>
             <p className="muted">{s.lines.length} paid lessons{s.paid_on ? ` · paid on ${s.paid_on}` : ""}</p>
             <div className="row">

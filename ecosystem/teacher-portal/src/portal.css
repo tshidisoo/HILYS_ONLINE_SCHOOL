@@ -1,0 +1,32 @@
+.t-login { max-width: 400px; margin: 0 auto; padding: 48px 16px; display: grid; gap: 12px; justify-items: center; text-align: center; }
+.t-login img { border-radius: 50%; }
+.t-login form { width: 100%; text-align: left; }
+.t-shell { min-height: 100%; display: grid; grid-template-rows: auto 1fr auto; }
+.t-top { display: flex; align-items: center; gap: 8px; padding: 10px 16px; background: var(--surface); border-bottom: 3px solid var(--navy); position: sticky; top: 0; z-index: 10; }
+.t-top img { border-radius: 50%; }
+.t-top strong { font: 800 18px var(--font-display); }
+.t-main { max-width: 860px; width: 100%; margin: 0 auto; padding: 20px 16px 96px; }
+.t-main:focus { outline: none; }
+.t-nav { position: fixed; bottom: 0; left: 0; right: 0; display: flex; background: var(--surface); border-top: 1px solid var(--line); padding-bottom: env(safe-area-inset-bottom); z-index: 10; }
+.t-nav a { flex: 1; text-align: center; padding: 14px 4px; text-decoration: none; color: var(--muted); font-weight: 600; border-top: 3px solid transparent; }
+.t-nav a.active { color: var(--navy); border-top-color: var(--orange-ink); }
+@media (max-width: 420px) { .t-name { display: none; } }
+.t-day { margin: 20px 0 8px; font-size: 16px; }
+.t-lesson { background: var(--surface); border: 1px solid var(--line); border-left: 5px solid var(--navy); border-radius: var(--r); padding: 14px; display: grid; gap: 6px; margin-bottom: 10px; }
+.t-lesson.needs { border-left-color: var(--orange-ink); }
+.t-lesson.done { border-left-color: var(--good); }
+.t-time { font: 800 18px var(--font-display); color: var(--navy); }
+.t-sub { color: var(--muted); font-size: 14px; }
+.t-support { background: var(--warn-bg); color: var(--warn); border-radius: 8px; padding: 8px 10px; font-size: 14px; }
+.t-alert { background: var(--warn-bg); color: var(--warn); border-radius: var(--r); padding: 12px 14px; font-weight: 600; margin-bottom: 12px; }
+.bar { height: 10px; background: var(--surface-2); border-radius: 999px; overflow: hidden; }
+.bar span { display: block; height: 100%; background: var(--teal-ink); }
+.status-pick { border: 0; padding: 0; margin: 0; display: grid; gap: 8px; }
+.status-pick legend { font-weight: 600; margin-bottom: 6px; }
+.status-pick label { display: flex; gap: 8px; align-items: center; border: 1px solid var(--line); border-radius: 10px; padding: 10px 12px; cursor: pointer; }
+.status-pick label.on { border-color: var(--navy); background: var(--navy-soft); font-weight: 600; }
+.status-pick input { accent-color: var(--orange-ink); width: 18px; height: 18px; }
+.parts { border: 0; padding: 0; margin: 0; display: grid; gap: 6px; }
+.parts label { display: flex; gap: 10px; align-items: center; border: 1px solid var(--line); border-radius: 10px; padding: 10px 12px; }
+.parts label.on { border-color: var(--good); background: var(--good-bg); font-weight: 600; }
+.parts input { width: 18px; height: 18px; }

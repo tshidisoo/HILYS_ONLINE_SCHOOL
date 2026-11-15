@@ -1,0 +1,28 @@
+/* HILYS design tokens. One edit here rebrands the staff app; the portal, app and PDFs hold the same values. */
+:root {
+  --bg: #f6f7fb; --surface: #ffffff; --surface-2: #eef0f7; --ink: #141a3a; --muted: #4a5170; --line: #dde0ec;
+  --navy: #1f2f86; --navy-soft: #e5e8f6;
+  --orange: #e8642c; --orange-ink: #b94515; --teal: #138a8a; --teal-ink: #0f7a7a; --sun: #f2a516;
+  --good: #0f7a5a; --good-bg: #e2f4ec; --warn: #8a5a00; --warn-bg: #fdf1d7; --bad: #b3261e; --bad-bg: #fbe6e4;
+  --info: #1f2f86; --info-bg: #e5e8f6; --neutral-bg: #eef0f7;
+  --on-accent: #ffffff;
+  /* Chart series colours, checked for colour-blind separation and contrast (light and dark). */
+  --chart-1: #008f8c; --chart-2: #c94f1c;
+  --font-display: "Bricolage Grotesque", "Trebuchet MS", system-ui, sans-serif;
+  --font-body: "Source Sans 3", "Segoe UI", system-ui, sans-serif;
+  --r: 12px; --r-sm: 8px;
+  --s1: 4px; --s2: 8px; --s3: 12px; --s4: 16px; --s5: 24px; --s6: 32px; --s7: 48px;
+  --shadow: 0 10px 30px rgb(20 26 58 / 0.12);
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #0b0d18; --surface: #151a2e; --surface-2: #1c2240; --ink: #eef0f8; --muted: #a8aecb; --line: #2a3150;
+    --navy: #8fa2ff; --navy-soft: #232b55; --orange-ink: #f5824f; --teal-ink: #3cc4c0;
+    --good: #5fd3a6; --good-bg: #14382c; --warn: #f7c35f; --warn-bg: #3a2d10; --bad: #f28b84; --bad-bg: #3d1717;
+    --info: #8fa2ff; --info-bg: #232b55; --neutral-bg: #232842; --on-accent: #0b0d18;
+    --chart-1: #27a9a4; --chart-2: #e06d38;
+    --shadow: 0 10px 30px rgb(0 0 0 / 0.5);
+    color-scheme: dark;
+  }
+}
