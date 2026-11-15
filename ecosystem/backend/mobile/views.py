@@ -96,7 +96,7 @@ def documents(request):
     fam = family_of(request.user)
     qs = fam.documents.exclude(status__in=["draft", "cancelled"]).order_by("-issue_date", "-id")
     return Response([{"id": d.pk, "kind": d.get_kind_display(), "number": d.number, "date": d.issue_date,
-                      "total": str(d.total), "currency": d.currency, "status": d.get_status_display(),
+                      "total": None if d.kind == "agreement" else str(d.total), "currency": d.currency, "status": d.get_status_display(),
                       "outstanding": str(d.outstanding()) if d.kind == "invoice" else None} for d in qs])
 
 
@@ -133,3 +133,46 @@ def messages(request):
     return Response([{"id": m.pk, "mine": m.sender_id == request.user.pk,
                       "from": "You" if m.sender_id == request.user.pk else (m.sender.display_name if m.sender else "HILYS"),
                       "body": m.body, "at": m.created_at} for m in fam.messages.select_related("sender")])
+
+
+# The app opens PDFs in the phone's browser or viewer, which cannot send the login token.
+# So the app asks for a signed link that works for five minutes and names one file only.
+from django.conf import settings  # noqa: E402
+from django.core import signing  # noqa: E402
+from rest_framework.permissions import AllowAny  # noqa: E402
+
+LINK_SALT = "hilys-parent-pdf"
+
+
+@api_view(["GET"])
+@permission_classes([IsParent])
+def pdf_link(request, kind, pk):
+    fam = family_of(request.user)
+    if kind == "document":
+        ok = Document.objects.filter(family=fam, pk=pk).exclude(status__in=["draft", "cancelled"]).exists()
+    elif kind == "certificate":
+        ok = Certificate.objects.filter(student__family=fam, pk=pk).exists()
+    else:
+        ok = False
+    if not ok:
+        raise RuleBroken("We could not find that document.", "detail")
+    token = signing.dumps({"k": kind, "id": pk, "f": fam.pk}, salt=LINK_SALT)
+    return Response({"url": f"{settings.API_PUBLIC_URL}/api/public/pdf/{token}/"})
+
+
+@api_view(["GET"])
+@permission_classes([AllowAny])
+def pdf_by_link(request, token):
+    try:
+        data = signing.loads(token, salt=LINK_SALT, max_age=300)
+    except signing.BadSignature:
+        raise RuleBroken("This link has expired. Open the document again from the app.", "detail")
+    if data["k"] == "document":
+        doc = Document.objects.filter(family_id=data["f"], pk=data["id"]).exclude(status__in=["draft", "cancelled"]).first()
+        if doc:
+            return pdf_response(doc)
+    else:
+        cert = Certificate.objects.filter(student__family_id=data["f"], pk=data["id"]).first()
+        if cert:
+            return certificate_pdf_response(cert)
+    raise RuleBroken("We could not find that document.", "detail")

@@ -41,3 +41,16 @@ class ParentScopeTests(TestCase):
         r = c.post("/api/parent/messages/", {"body": "Hello"}, format="json")
         self.assertEqual(r.status_code, 200)
         self.assertEqual(self.f1.messages.count(), 1)
+
+
+class PdfLinkTests(ParentScopeTests):
+    def test_signed_link_opens_own_pdf_and_refuses_others(self):
+        c = client_for(self.p1)
+        mine = Document.objects.get(family=self.f1)
+        url = c.get(f"/api/parent/pdf-link/document/{mine.pk}/").data["url"]
+        path = url.split("8000")[-1]
+        r = client_for(None).get(path)
+        self.assertEqual(r.status_code, 200)
+        self.assertTrue(r.content.startswith(b"%PDF"))
+        self.assertEqual(c.get(f"/api/parent/pdf-link/document/{self.other_doc.pk}/").status_code, 400)
+        self.assertEqual(client_for(None).get(path[:-6] + "xxxxx/").status_code, 400)

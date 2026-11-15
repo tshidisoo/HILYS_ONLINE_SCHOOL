@@ -49,6 +49,7 @@ api = [
     path("parent/children/<int:pk>/progress/", parent.progress), path("parent/documents/", parent.documents),
     path("parent/documents/<int:pk>/pdf/", parent.document_pdf), path("parent/certificates/<int:pk>/pdf/", parent.certificate_pdf),
     path("parent/messages/", parent.messages),
+    path("parent/pdf-link/<str:kind>/<int:pk>/", parent.pdf_link), path("public/pdf/<str:token>/", parent.pdf_by_link),
     # Public website
     path("public/enquiry/", website.enquiry), path("public/catalogue/", website.catalogue), path("public/content/", website.content),
     path("", include(router.urls)),
