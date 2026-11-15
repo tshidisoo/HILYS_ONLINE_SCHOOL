@@ -71,8 +71,19 @@ def content(request):
                      for c in SiteContent.objects.filter(is_published=True)])
 
 
+def _too_many(request, scope, limit=30, seconds=3600):
+    """A small per-address limit for the public pages, so codes cannot be guessed by trying many."""
+    from django.core.cache import cache
+    key = f"pub-{scope}-{request.META.get('REMOTE_ADDR', '')}"
+    hits = cache.get_or_set(key, 0, seconds)
+    cache.incr(key)
+    return hits >= limit
+
+
 def verify(request, code):
     """Anyone holding a HILYS document can check it is genuine. Shows only what is printed on it."""
+    if _too_many(request, "verify"):
+        return render(request, "public/verify.html", {"company": CompanySettings.get(), "code": "", "busy": True}, status=429)
     code = (code or "").strip().upper()[:16]
     doc = Document.objects.filter(verify_code=code).exclude(status="draft").select_related("family").first()
     cert = None if doc else Certificate.objects.filter(verify_code=code).select_related("student", "book").first()

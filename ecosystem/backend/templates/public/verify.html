@@ -6,5 +6,5 @@
 <dt>Status</dt><dd>{% if doc.status == "cancelled" %}<span class="bad">Cancelled: no longer valid</span>{% else %}{{ doc.get_status_display }}{% endif %}</dd></dl></div>
 {% elif cert %}<p class="ok">✓ This is a genuine certificate from {{ company.short_name }}.</p>
 <div class="card"><dl><dt>Certificate</dt><dd>{{ cert.number }}</dd><dt>Given to</dt><dd>{{ cert.student.name }}</dd><dt>For</dt><dd>{{ cert.book.title }}</dd><dt>Date</dt><dd>{{ cert.issued_on|date:"j F Y" }}</dd></dl></div>
-{% else %}<p class="bad">We could not find a document with the code {{ code }}.</p><p>Check the code on the document and try again, or message {{ company.short_name }}.</p>{% endif %}
+{% elif busy %}<p class="bad">Too many checks from here. Please try again in an hour.</p>{% else %}<p class="bad">We could not find a document with the code {{ code }}.</p><p>Check the code on the document and try again, or message {{ company.short_name }}.</p>{% endif %}
 {% endblock %}

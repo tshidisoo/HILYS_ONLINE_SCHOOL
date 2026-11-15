@@ -53,6 +53,13 @@
   </ol>
   <div class="draft">DRAFT WORDING: to be approved by the owner and reviewed by a lawyer before use.</div>
   <table style="margin-top:12mm"><tr><td style="border:0;width:50%">Parent: ______________________<br><br>Date: __________</td><td style="border:0">For {{ company.short_name }}: ______________________<br><br>Date: __________</td></tr></table>
+{% elif doc.kind == "payment_plan" %}
+  <h2>Paying {{ doc.related.number }} in instalments</h2>
+  <p>We have agreed that the {{ doc.currency }} {{ doc.total }} still owed on {{ doc.related.number }} can be paid in {{ installments|length }} parts, on the dates below.</p>
+  <table><thead><tr><th>Due</th><th class="num">Amount</th></tr></thead><tbody>
+    {% for i in installments %}<tr><td>{{ i.due_date|date:"j M Y" }}</td><td class="num">{{ doc.currency }} {{ i.amount }}</td></tr>{% endfor %}</tbody></table>
+  <div class="totals"><div class="grand"><span>Total</span><span>{{ doc.currency }} {{ doc.total }}</span></div></div>
+  <div class="notes"><b>How to pay.</b> {{ company.payment_details }}</div>
 {% else %}
   <table><thead><tr><th>Description</th><th class="num">Qty</th><th class="num">Price</th><th class="num">Amount</th></tr></thead><tbody>
   {% for l in lines %}<tr><td>{{ l.description }}{% if l.student %}<br><span style="color:{{ t.MUTED }}">{{ l.student.name }}</span>{% endif %}</td><td class="num">{{ l.quantity|floatformat:"-2" }}</td><td class="num">{{ l.unit_price }}</td><td class="num">{{ l.amount }}</td></tr>

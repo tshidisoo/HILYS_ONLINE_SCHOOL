@@ -103,6 +103,11 @@ class BillingLifecycleTests(TestCase):
         r = self.client.get(f"/verify/{inv.verify_code}")
         self.assertContains(r, inv.number)
         self.assertEqual(self.client.get("/verify/NOTACODE").status_code, 404)
+        from django.core.cache import cache
+        cache.clear()
+        codes = [self.client.get(f"/verify/WRONG{i}").status_code for i in range(31)]
+        self.assertEqual(codes[-1], 429)
+        cache.clear()
 
     def test_monthly_invoices_are_safe_to_run_twice(self):
         from enrolments.models import Enrolment
