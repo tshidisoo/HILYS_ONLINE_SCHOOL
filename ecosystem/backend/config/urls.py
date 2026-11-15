@@ -57,5 +57,5 @@ api = [
 urlpatterns = [
     path("api/", include(api)),
     path("verify/<str:code>", website.verify),
-    path("feedback/<str:token>", website.feedback),
+    path("survey/<str:token>", website.feedback),
 ]

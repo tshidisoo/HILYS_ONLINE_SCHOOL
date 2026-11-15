@@ -1,0 +1,30 @@
+.dt { display: grid; gap: 12px; }
+.dt-tools { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
+.dt-search { flex: 1 1 240px; max-width: 360px; }
+.dt-filter { flex: 0 1 200px; }
+.dt-wrap { background: var(--surface); border: 1px solid var(--line); border-radius: var(--r); overflow-x: auto; }
+.dt-table { width: 100%; border-collapse: collapse; }
+.dt-table th { text-align: left; font-size: 12.5px; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); font-weight: 700;
+  padding: 12px 14px; border-bottom: 1px solid var(--line); white-space: nowrap; background: var(--surface); }
+.dt-table td { padding: 12px 14px; border-bottom: 1px solid var(--line); vertical-align: top; }
+.dt-table tbody tr:last-child td { border-bottom: 0; }
+.dt-table .num { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.dt-table tr.clickable { cursor: pointer; }
+.dt-table tr.clickable:hover td { background: var(--surface-2); }
+.dt-table tr.clickable:focus-visible { outline: 3px solid var(--orange); outline-offset: -3px; }
+.dt-sort { background: none; border: 0; padding: 0; font: inherit; color: inherit; text-transform: inherit; letter-spacing: inherit; cursor: pointer; }
+.dt-sort:hover { color: var(--ink); }
+.dt-pages { display: flex; gap: 12px; align-items: center; justify-content: center; flex-wrap: wrap; }
+.cell-main { font-weight: 600; }
+.cell-sub { color: var(--muted); font-size: 13px; }
+
+/* Phones: each row becomes a card */
+@media (max-width: 700px) {
+  .dt-wrap { border: 0; background: none; }
+  .dt-table thead { display: none; }
+  .dt-table, .dt-table tbody, .dt-table tr, .dt-table td { display: block; width: 100%; }
+  .dt-table tr { background: var(--surface); border: 1px solid var(--line); border-radius: var(--r); margin-bottom: 10px; padding: 6px 0; }
+  .dt-table td { border: 0; padding: 6px 14px; display: flex; justify-content: space-between; gap: 12px; text-align: right; }
+  .dt-table td::before { content: attr(data-label); color: var(--muted); font-size: 13px; text-align: left; flex: none; }
+  .dt-table .num { white-space: normal; }
+}

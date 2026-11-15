@@ -43,6 +43,7 @@ class BookCheckSerializer(serializers.ModelSerializer):
 
 class BookViewSet(viewsets.ReadOnlyModelViewSet):
     serializer_class = BookSerializer
+    pagination_class = None  # a handful of books
     queryset = Book.objects.prefetch_related("units")
     permission_classes = [IsInternalStaff]
 

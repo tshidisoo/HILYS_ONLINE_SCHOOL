@@ -52,7 +52,7 @@ class FeedbackSerializer(serializers.ModelSerializer):
 
     def get_link(self, f):
         from django.conf import settings
-        return f"{settings.API_PUBLIC_URL}/feedback/{f.token}"
+        return f"{settings.API_PUBLIC_URL}/survey/{f.token}"
 
 
 class FeedbackViewSet(viewsets.ModelViewSet):

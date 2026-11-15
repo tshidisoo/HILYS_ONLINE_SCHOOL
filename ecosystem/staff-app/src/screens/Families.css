@@ -1,0 +1,10 @@
+.fam-balance { display: grid; gap: 2px; border-left: 4px solid var(--navy); }
+.fam-balance strong { font: 800 20px var(--font-display); }
+.child-card { display: grid; gap: 8px; }
+.msgs { display: grid; gap: 10px; }
+.msg { background: var(--surface-2); border-radius: 12px; padding: 10px 14px; max-width: 85%; justify-self: end; }
+.msg.from-family { justify-self: start; background: var(--navy-soft); }
+.msg p { margin: 4px 0; white-space: pre-wrap; }
+.msg-form { display: grid; gap: 8px; margin-top: 8px; }
+.msg-form .btn { justify-self: end; }
+.enrol-line { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; background: var(--surface-2); border: 0; border-radius: 8px; padding: 8px 10px; text-align: left; cursor: pointer; width: 100%; }

@@ -1,0 +1,4 @@
+.lines { display: grid; gap: 8px; }
+.line { display: grid; grid-template-columns: 1.1fr 1.6fr 70px 100px 40px; gap: 8px; align-items: center; }
+.line-head { font-size: 12px; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); font-weight: 700; }
+@media (max-width: 700px) { .line { grid-template-columns: 1fr 1fr; } .line-head { display: none; } }
